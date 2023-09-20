@@ -16,6 +16,7 @@ import StudyMain from "./StudyMain";
 import StudyRoom from "./StudyRoom";
 import StudyWork from "./StudyWork";
 import StudyMake from "./StudyMake";
+import StudyWorkAnswer from "./StudyWorkAnswer";
 
 export {
   Main,
@@ -33,4 +34,5 @@ export {
   StudyWork,
   StudyRoom,
   StudyMake,
+  StudyWorkAnswer,
 };

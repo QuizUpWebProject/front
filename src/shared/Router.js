@@ -11,6 +11,7 @@ import {
   StudyMake,
   StudyRoom,
   StudyWork,
+  StudyWorkAnswer,
   User,
   Work,
   WorkAnswer,
@@ -38,6 +39,7 @@ const Router = () => {
         <Route path="/:studyroomId" element={<StudyRoom />} />
         <Route path="/:studyworkId" element={<StudyWork />} />
         <Route path="/studymake" element={<StudyMake />} />
+        <Route path="/:studyworkanswerId" element={<StudyWorkAnswer />} />
       </Routes>
     </BrowserRouter>
   );
