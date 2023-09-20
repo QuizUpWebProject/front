@@ -1,7 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {
+  BackAnswer,
   BackMain,
+  BackWork,
+  BackWorkList,
+  FrontAnswer,
   FrontMain,
+  FrontWork,
+  FrontWorkList,
   JoinAgree,
   JoinEnd,
   JoinFormP,
@@ -13,9 +19,6 @@ import {
   StudyWork,
   StudyWorkAnswer,
   User,
-  Work,
-  WorkAnswer,
-  WorkBook,
 } from "../pages";
 import Header from "./Header";
 
@@ -31,15 +34,27 @@ const Router = () => {
         <Route path="/joinend" element={<JoinEnd />} />
         <Route path="/:userid" element={<User />} />
         <Route path="/front" element={<FrontMain />} />
+        <Route path="/front/:worklistid" element={<FrontWorkList />} />
+        <Route path="/front/:worklistid/:workid" element={<FrontWork />} />
+        <Route
+          path="/front/:worklistid/:workid/answer"
+          element={<FrontAnswer />}
+        />
         <Route path="/back" element={<BackMain />} />
-        <Route path="/:workbookid" element={<WorkBook />} />
-        <Route path="/:workId" element={<Work />} />
-        <Route path="/:workanswer" element={<WorkAnswer />} />
+        <Route path="/back/:worklistid" element={<BackWorkList />} />
+        <Route path="/back/:worklistid/:workid" element={<BackWork />} />
+        <Route
+          path="/back/:worklistid/:workid/answer"
+          element={<BackAnswer />}
+        />
         <Route path="/study" element={<StudyMain />} />
-        <Route path="/:studyroomId" element={<StudyRoom />} />
-        <Route path="/:studyworkId" element={<StudyWork />} />
+        <Route path="/study/:studyroomid" element={<StudyRoom />} />
+        <Route path="/study/:studyroonid/worklistid" element={<StudyWork />} />
+        <Route
+          path="/study/:studyroonid/worklistid/answer"
+          element={<StudyWorkAnswer />}
+        />
         <Route path="/studymake" element={<StudyMake />} />
-        <Route path="/:studyworkanswerId" element={<StudyWorkAnswer />} />
       </Routes>
     </BrowserRouter>
   );

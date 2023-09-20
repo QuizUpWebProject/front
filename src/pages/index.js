@@ -7,10 +7,13 @@ import JoinAgree from "./JoinAgree";
 import JoinEnd from "./JoinEnd";
 
 import FrontMain from "./FrontMain";
+import FrontWorkList from "./FrontWorkList";
+import FrontWork from "./FrontWork";
+import FrontAnswer from "./FrontWorkAnswer";
 import BackMain from "./BackMain";
-import Work from "./Work";
-import WorkBook from "./WorkBook";
-import WorkAnswer from "./WorkAnswer";
+import BackWorkList from "./BackWorkList";
+import BackWork from "./BackWork";
+import BackAnswer from "./BackWorkAnswer";
 
 import StudyMain from "./StudyMain";
 import StudyRoom from "./StudyRoom";
@@ -26,10 +29,13 @@ export {
   JoinFormP,
   JoinEnd,
   FrontMain,
+  FrontWorkList,
+  FrontWork,
+  FrontAnswer,
   BackMain,
-  Work,
-  WorkAnswer,
-  WorkBook,
+  BackWorkList,
+  BackWork,
+  BackAnswer,
   StudyMain,
   StudyWork,
   StudyRoom,
