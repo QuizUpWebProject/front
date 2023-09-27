@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import StudyItem from "./StudyItem";
+import SelectList from "./SelectList";
 
 export default function StudyList() {
   // 스터디 리스트 데이터 (예시)
@@ -13,14 +14,21 @@ export default function StudyList() {
 
   // 상태 변수: 현재 선택된 유형
   const [selectedType, setSelectedType] = useState("전체");
+  // 추천/조회 선택
+  const [selectOption, setSelectOption] = useState("조회순");
 
   // 리스트를 필터링하는 함수
   const filterStudyList = () => {
-    if (selectedType === "전체") {
-      return studyData; // 전체를 선택한 경우 모든 리스트 반환
-    } else {
-      return studyData.filter((study) => study.type === selectedType);
+    let filteredList = studyData;
+    if (selectedType !== "전체") {
+      filteredList = filteredList.filter(
+        (study) => study.type === selectedType
+      );
     }
+
+    // 정렬 옵션에 따라 정렬
+
+    return filteredList;
   };
 
   // 전체, 프론트엔드, 백엔드 버튼 클릭 시 상태 업데이트
@@ -28,29 +36,39 @@ export default function StudyList() {
     setSelectedType(type);
   };
 
+  // 정렬 변경시 상태 업데이트
+  const handleOptionChange = (event) => {
+    setSelectOption(event.target.value);
+  };
+
   return (
     <div>
-      {/* 버튼 그룹 생성 */}
-      <FilterButtons>
-        <FilterBtn
-          isSelected={selectedType === "전체"}
-          onClick={() => handleFilterClick("전체")}
-        >
-          전체
-        </FilterBtn>
-        <FilterBtn
-          isSelected={selectedType === "프론트엔드"}
-          onClick={() => handleFilterClick("프론트엔드")}
-        >
-          프론트엔드
-        </FilterBtn>
-        <FilterBtn
-          isSelected={selectedType === "백엔드"}
-          onClick={() => handleFilterClick("백엔드")}
-        >
-          백엔드
-        </FilterBtn>
-      </FilterButtons>
+      <Container>
+        <FilterButtons>
+          <FilterBtn
+            isSelected={selectedType === "전체"}
+            onClick={() => handleFilterClick("전체")}
+          >
+            전체
+          </FilterBtn>
+          <FilterBtn
+            isSelected={selectedType === "프론트엔드"}
+            onClick={() => handleFilterClick("프론트엔드")}
+          >
+            프론트엔드
+          </FilterBtn>
+          <FilterBtn
+            isSelected={selectedType === "백엔드"}
+            onClick={() => handleFilterClick("백엔드")}
+          >
+            백엔드
+          </FilterBtn>
+        </FilterButtons>
+        <SelectList
+          selectedOption={selectOption}
+          onChange={handleOptionChange}
+        />
+      </Container>
 
       {/* 필터링된 스터디 리스트 표시 */}
       <div>
@@ -68,6 +86,11 @@ export default function StudyList() {
     </div>
   );
 }
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between; /* 왼쪽/오른쪽 정렬 설정 */
+  align-items: center; /* 수직 가운데 정렬 */
+`;
 
 const FilterButtons = styled.div`
   display: flex;
