@@ -23,7 +23,7 @@ const StudyMain = () => {
       <SearchSection>
         <SelectBox />
         <SearchInputWrapper>
-          <SearchInput placeholder="검색어를 입력하세요." />
+          <SearchInput placeholder="검색어를 입력하세요." name="search" />
           <SearchImg src={SearchIcon} alt="검색아이콘" />
         </SearchInputWrapper>
       </SearchSection>
@@ -93,6 +93,8 @@ const SearchInput = styled.input`
   padding: 5px;
   background: transparent;
   width: 200px;
+  margin-left: 5px;
+  color: #fff;
 
   &::placeholder {
     color: #fff;
