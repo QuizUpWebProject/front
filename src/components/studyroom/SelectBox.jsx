@@ -26,7 +26,6 @@ const SelectContainer = styled.div`
   position: relative;
   width: 55px;
   padding: 8px;
-  border-radius: 6px;
   background-color: #3f424e;
   align-self: center;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
