@@ -15,8 +15,7 @@ const SelectBox = () => {
       <Label>{currentValue}</Label>
       <SelectOptions show={isShowOption}>
         <Option onClick={handleSelectValue}>제목</Option>
-        <Option onClick={handleSelectValue}>내용</Option>
-        <Option onClick={handleSelectValue}>작성자</Option>
+        <Option onClick={handleSelectValue}>닉네임</Option>
       </SelectOptions>
     </SelectContainer>
   );
