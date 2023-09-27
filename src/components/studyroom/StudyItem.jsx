@@ -3,12 +3,17 @@ import UserIcon from "../../assets/people.png";
 import GroupIcon from "../../assets/group.png";
 import LockIcon from "../../assets/lock.png";
 import JoinBtn from "../../assets/Btn_join.png";
+import { useNavigate } from "react-router-dom";
 
 export default function StudyItem() {
+  const navigate = useNavigate();
+
   return (
     <Container>
       <div>프론트엔드</div>
-      <div>스터디방명 이름 예시 스터디방명 이름 예시</div>
+      <Title onClick={() => navigate("/study/:studyroomid")}>
+        스터디방명 이름 예시 스터디방명 이름 예시
+      </Title>
       <div>
         <Icon src={UserIcon} alt="작성자" />
         소밍밍
@@ -35,8 +40,21 @@ const Container = styled.div`
   border-right: none;
   border-left: none;
   width: 1090px;
+  font-size: 15px;
 `;
 
 const Icon = styled.img`
   margin-right: 10px;
+`;
+
+const Title = styled.button`
+  border: none;
+  outline: none;
+  font-size: 15px;
+  background-color: transparent;
+  color: #ffffff;
+
+  &:hover {
+    color: #5263ff;
+  }
 `;
