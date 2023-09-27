@@ -49,7 +49,7 @@ const TopSection = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
   width: 50%;
   text-align: left;
@@ -69,6 +69,7 @@ const Image = styled.img`
 const MyStudyList = styled.div`
   padding: 20px 0;
   border-bottom: 1px solid #ccc;
+  font-size: 15px;
 `;
 
 const SearchSection = styled.div`
