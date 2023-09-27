@@ -2,6 +2,7 @@ import styled from "styled-components";
 import UserIcon from "../../assets/people.png";
 import GroupIcon from "../../assets/group.png";
 import LockIcon from "../../assets/lock.png";
+import JoinBtn from "../../assets/Btn_join.png";
 
 export default function StudyItem() {
   return (
@@ -20,6 +21,7 @@ export default function StudyItem() {
         <Icon src={LockIcon} alt="비공개" />
         비공개
       </div>
+      <img src={JoinBtn} alt="가입하기" />
     </Container>
   );
 }
@@ -28,7 +30,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #ccc;
+  border: 1px solid #868686;
   padding: 10px;
   border-right: none;
   border-left: none;
