@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import DropDownIcon from "../../assets/dropdown.png";
 
 const SelectBox = () => {
   const [isShowOption, setShowOptions] = useState(false);
@@ -12,7 +13,10 @@ const SelectBox = () => {
 
   return (
     <SelectContainer onClick={() => setShowOptions((prev) => !prev)}>
-      <Label>{currentValue}</Label>
+      <Label>
+        {currentValue}
+        <Icon src={DropDownIcon} alt="dropdown" />
+      </Label>
       <SelectOptions show={isShowOption}>
         <Option onClick={handleSelectValue}>제목</Option>
         <Option onClick={handleSelectValue}>닉네임</Option>
@@ -23,26 +27,22 @@ const SelectBox = () => {
 
 const SelectContainer = styled.div`
   position: relative;
-  width: 55px;
+  width: 70px;
   padding: 8px;
   background-color: #3f424e;
   align-self: center;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   cursor: pointer;
-  &::before {
-    content: "⌵";
-    position: absolute;
-    top: 1px;
-    right: 8px;
-    color: #fff;
-    font-size: 20px;
-  }
 `;
 
 const Label = styled.label`
   font-size: 14px;
   margin-left: 4px;
   text-align: center;
+`;
+
+const Icon = styled.img`
+  margin-left: 12px;
 `;
 
 const SelectOptions = styled.ul`
