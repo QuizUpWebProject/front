@@ -11,7 +11,9 @@ const StudyRoom = () => {
     <Wrapper>
       <TopSection>
         <div>
-          <TopTitle>삼성 SW 역량 테스트 기출 문제</TopTitle>
+          <TopTitle>
+            삼성 SW 역량 테스트 기출 문제 <Works>총 91문제</Works>
+          </TopTitle>
           <TopContent>
             <div>
               <Icon src={UserIcon} alt="작성자" />
@@ -70,6 +72,14 @@ const Wrapper = styled.div`
 const TopTitle = styled.div`
   font-size: 20px;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const Works = styled.div`
+  font-size: 15px;
+  margin-left: 14px;
 `;
 
 const Icon = styled.img`
@@ -90,6 +100,7 @@ const TopContent = styled.div`
   align-items: center;
   margin-right: 10px;
   margin-top: 15px;
+  font-size: 13px;
 `;
 
 const StudySection = styled.div`
