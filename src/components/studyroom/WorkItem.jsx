@@ -2,12 +2,15 @@ import styled from "styled-components";
 import UserIcon from "../../assets/people.png";
 import SeeIcon from "../../assets/see.png";
 import StartBtn from "../../assets/Btn_start.png";
+import { useNavigate } from "react-router-dom";
 
 export default function WorkItem() {
+  const navigate = useNavigate();
+
   return (
     <Container>
       <div>01</div>
-      <Title>
+      <Title onClick={() => navigate("/study/:studyroonid/worklistid")}>
         문제제목 예시 문제제목 예시 문제제목 예시 <Comment>[2]</Comment>
       </Title>
       <div>2023.08.18</div>
