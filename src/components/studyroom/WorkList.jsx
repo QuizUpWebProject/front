@@ -2,6 +2,9 @@ import { useState } from "react";
 import styled from "styled-components";
 import SerachBox from "./SearchBox";
 import WorkItem from "./WorkItem";
+import usePagination from "../../hooks/usePagination";
+import LeftIcon from "../../assets/left.png";
+import RightIcon from "../../assets/right.png";
 
 export default function WorkLikst() {
   // 문제 리스트 data (예시)
@@ -111,6 +114,19 @@ export default function WorkLikst() {
   // default 값은 '최신순'
   const [selectedType, setSelectedType] = useState("최신순");
 
+  const itemsPerPage = 15; // 페이지 당 보여줄 아이템 수
+  const {
+    currentPage,
+    currentItems,
+    totalPages,
+    paginate,
+    goToPrevPage,
+    goToNextPage,
+  } = usePagination(
+    workData, // 데이터를 workData로 변경
+    itemsPerPage
+  );
+
   // 문제 리스트 정렬
   const filterWorkList = () => {
     // 정렬 기준에 따라 데이터 변경
@@ -154,8 +170,34 @@ export default function WorkLikst() {
         </FilterButtons>
 
         <SerachBox />
-      </Wrapper>{" "}
-      <WorkItem />
+      </Wrapper>
+
+      {/* 필터링된 스터디 리스트 표시 */}
+      <div>
+        {/* 현재 페이지의 아이템 렌더링 */}
+        {currentItems.map((study) => (
+          <WorkItem key={study.id} title={study.title} />
+        ))}
+
+        {/* 페이지네이션 컴포넌트 렌더링 */}
+        <PaginationContainer>
+          <PaginationButton onClick={goToPrevPage}>
+            <img src={LeftIcon} alt="left" />
+          </PaginationButton>
+          {Array.from({ length: totalPages }).map((_, index) => (
+            <PageButton
+              key={index}
+              onClick={() => paginate(index + 1)}
+              isSelected={index + 1 === currentPage}
+            >
+              {index + 1}
+            </PageButton>
+          ))}
+          <PaginationButton onClick={goToNextPage}>
+            <img src={RightIcon} alt="right" />
+          </PaginationButton>
+        </PaginationContainer>
+      </div>
     </div>
   );
 }
@@ -179,4 +221,28 @@ const FilterBtn = styled.button`
   font-size: 16px;
   font-weight: 500;
   margin-right: 10px;
+`;
+
+const PaginationContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  justify-content: center;
+  margin-bottom: 50px;
+`;
+
+const PaginationButton = styled.button`
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 0 5px;
+`;
+
+const PageButton = styled.button`
+  border: none;
+  margin: 10px;
+  background-color: transparent;
+  color: ${(props) => (props.isSelected ? "#5263ff" : "#838383")};
+  font-size: 15px;
 `;
