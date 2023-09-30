@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import SerachBox from "./SearchBox";
+import WorkItem from "./WorkItem";
 
 export default function WorkLikst() {
   // 문제 리스트 data (예시)
@@ -129,30 +130,33 @@ export default function WorkLikst() {
   };
 
   return (
-    <Wrapper>
-      <FilterButtons>
-        <FilterBtn
-          isSelected={selectedType === "최신순"}
-          onClick={() => handleFilterClick("최신순")}
-        >
-          최신순
-        </FilterBtn>
-        <FilterBtn
-          isSelected={selectedType === "등록순"}
-          onClick={() => handleFilterClick("등록순")}
-        >
-          등록순
-        </FilterBtn>
-        <FilterBtn
-          isSelected={selectedType === "조회순"}
-          onClick={() => handleFilterClick("조회순")}
-        >
-          조회순
-        </FilterBtn>
-      </FilterButtons>
+    <div>
+      <Wrapper>
+        <FilterButtons>
+          <FilterBtn
+            isSelected={selectedType === "최신순"}
+            onClick={() => handleFilterClick("최신순")}
+          >
+            최신순
+          </FilterBtn>
+          <FilterBtn
+            isSelected={selectedType === "등록순"}
+            onClick={() => handleFilterClick("등록순")}
+          >
+            등록순
+          </FilterBtn>
+          <FilterBtn
+            isSelected={selectedType === "조회순"}
+            onClick={() => handleFilterClick("조회순")}
+          >
+            조회순
+          </FilterBtn>
+        </FilterButtons>
 
-      <SerachBox />
-    </Wrapper>
+        <SerachBox />
+      </Wrapper>{" "}
+      <WorkItem />
+    </div>
   );
 }
 
