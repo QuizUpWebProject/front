@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import MakeIcon from "../assets/Btn_work.png";
-import OutIcon from "../assets/Btn_out.png";
 import UserIcon from "../assets/people.png";
 import GroupIcon from "../assets/group.png";
 import LockIcon from "../assets/lock.png";
 import WorkLikst from "../components/studyroom/WorkList";
+import OutStudy from "../components/studyroom/OutStudy";
+import MakeWork from "../components/studyroom/MakeWork";
 
 const StudyRoom = () => {
   return (
@@ -29,8 +29,8 @@ const StudyRoom = () => {
         </div>
 
         <div>
-          <Icon src={MakeIcon} alt="makework" />
-          <Icon src={OutIcon} alt="outstudy" />
+          <MakeWork />
+          <OutStudy />
         </div>
       </TopSection>
 
