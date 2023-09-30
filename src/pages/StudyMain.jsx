@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import SelectBox from "../components/studyroom/SelectBox";
-import StudyList from "../components/studyroom/StudyList";
+import SelectBox from "../components/study/SelectBox";
+import StudyList from "../components/study/StudyList";
 import MakeStudy from "../assets/Btn_mstudy.png";
 import SearchIcon from "../assets/search.png";
 
