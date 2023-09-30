@@ -4,6 +4,7 @@ import OutIcon from "../assets/Btn_out.png";
 import UserIcon from "../assets/people.png";
 import GroupIcon from "../assets/group.png";
 import LockIcon from "../assets/lock.png";
+import WorkLikst from "../components/studyroom/WorkList";
 
 const StudyRoom = () => {
   return (
@@ -51,9 +52,10 @@ const StudyRoom = () => {
         </Box>
       </StudySection>
 
-      <div>최신순</div>
-      <div>검색창</div>
-      <div>문제 리스트</div>
+      {/* 문제 리스트 */}
+      <div>
+        <WorkLikst />
+      </div>
     </Wrapper>
   );
 };
