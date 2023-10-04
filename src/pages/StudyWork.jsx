@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import PlusBtn from "../assets/Btn_plus.png";
 import ShareBtn from "../assets/Btn_share.png";
 import RecommendList from "../components/studyroomWork/RecommendList";
+import PlusModal from "../components/studyroomWork/PlusModal";
 
 const StudyWork = () => {
   return (
@@ -13,7 +13,7 @@ const StudyWork = () => {
       </QContent>
       <Line></Line>
       <Buttons>
-        <Img src={PlusBtn} alt="plus" />
+        <PlusModal />
         <Img src={ShareBtn} alt="share" />
       </Buttons>
       <Answer>A.</Answer>
