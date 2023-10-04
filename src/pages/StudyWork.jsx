@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import PlusBtn from "../assets/Btn_plus.png";
 import ShareBtn from "../assets/Btn_share.png";
+import RecommendList from "../components/studyroomWork/RecommendList";
 
 const StudyWork = () => {
   return (
@@ -20,7 +21,7 @@ const StudyWork = () => {
         <ATextArea placeholder="정답을 입력해주세요" type="text-area" />
         <AButton>제출</AButton>
       </ABox>
-      <div>추천 스터디방</div>
+      <RecommendList />
     </Wrapper>
   );
 };
