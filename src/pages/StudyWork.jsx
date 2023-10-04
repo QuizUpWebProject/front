@@ -16,10 +16,10 @@ const StudyWork = () => {
         <Img src={ShareBtn} alt="share" />
       </Buttons>
       <Answer>A.</Answer>
-      <div>
-        <textarea placeholder="정답을 입력해주세요" type="text-area" />
-        <button>입력</button>
-      </div>
+      <ABox>
+        <ATextArea placeholder="정답을 입력해주세요" type="text-area" />
+        <AButton>제출</AButton>
+      </ABox>
       <div>추천 스터디방</div>
     </Wrapper>
   );
@@ -72,4 +72,43 @@ const Answer = styled.div`
   color: #5263ff;
   font-size: 35px;
   font-weight: 400;
+`;
+
+const ABox = styled.div`
+  width: 1090px;
+  height: 158px;
+  background-color: #3f424e;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-top: 20px;
+`;
+
+const ATextArea = styled.textarea`
+  flex: 1;
+  width: 958px;
+  height: 114px;
+  margin-right: 5px;
+  margin-left: 10px;
+  background-color: #8f8f8f;
+  border: 1px solid #dddddd;
+  border-radius: 6px;
+  padding: 10px;
+
+  &::placeholder {
+    font-size: 15px;
+    padding: 5px;
+    color: #000000;
+  }
+`;
+
+const AButton = styled.button`
+  width: 91px;
+  height: 114px;
+  border: none;
+  border-radius: 6px;
+  background-color: #a7a7a7;
+  font-size: 15px;
+  color: #000000;
+  margin-right: 10px;
 `;
