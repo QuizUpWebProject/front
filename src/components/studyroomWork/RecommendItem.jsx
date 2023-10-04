@@ -1,33 +1,26 @@
 import styled from "styled-components";
 import UserIcon from "../../assets/people.png";
-import HeartIcon from "../../assets/heart.png";
-import ChatIcon from "../../assets/chat.png";
-import { useNavigate } from "react-router-dom";
+import GroupIcon from "../../assets/group.png";
+import JoinIcon from "../../assets/Btn_join.png";
 
 export default function RecommendItem() {
-  const navigate = useNavigate();
   return (
-    <Wrapper onClick={() => navigate("/study/:studyroomid")}>
+    <Wrapper>
+      <ItemInfo>스터디방명 이름 예시 SW 삼성 2023 하반기 공채</ItemInfo>
+
       <Container>
         <UserInfo>
-          <UserImage src={UserIcon} alt="user" />
-          <UserName>소밍밍</UserName>
+          <Stat>
+            <UserImage src={UserIcon} alt="user" />
+            <UserName>소밍밍</UserName>
+          </Stat>
+          <Stat>
+            <UserImage src={GroupIcon} alt="group" />
+            21/50
+          </Stat>
         </UserInfo>
-        <UserStats>
-          <Stat>
-            <UserImage src={HeartIcon} alt="heart" />
-            26
-          </Stat>
-          <Stat>
-            <UserImage src={ChatIcon} alt="chat" />
-            04
-          </Stat>
-        </UserStats>
+        <UserImage src={JoinIcon} alt="join" />
       </Container>
-      <ItemInfo>
-        <ItemText>정보처리기사 실기_2023</ItemText>
-        <ItemStat>91문제</ItemStat>
-      </ItemInfo>
     </Wrapper>
   );
 }
@@ -57,35 +50,21 @@ const UserImage = styled.img`
 `;
 
 const UserName = styled.div`
-  magin-right: 10px;
+  magin-right: 20px;
   font-size: 16px;
-`;
-
-const UserStats = styled.div`
-  display: flex;
-  align-items: center;
 `;
 
 const Stat = styled.div`
   display: flex;
   align-items: center;
-  margin-right: 10px;
+  margin-right: 20px;
   font-size: 16px;
 `;
 
 const ItemInfo = styled.div`
   display: flex;
   align-items: center;
-  //justify-content: space-between;
-  margin-top: 25px;
-`;
-
-const ItemText = styled.div`
   text-align: left;
-  margin-right: 30px;
-`;
-
-const ItemStat = styled.span`
-  text-align: center;
-  margin-left: 10px;
+  margin-bottom: 20px;
+  margin-top: 20px;
 `;

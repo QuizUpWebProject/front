@@ -7,7 +7,7 @@ export default function RecommendList() {
 
   return (
     <Container>
-      <Title>추천 문제집</Title>
+      <Title>추천 스터디방</Title>
       <ItemBox>
         {recommdItems.map((_, index) => (
           <RecommendItem key={index} />
