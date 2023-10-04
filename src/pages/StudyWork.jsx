@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import ShareBtn from "../assets/Btn_share.png";
 import RecommendList from "../components/studyroomWork/RecommendList";
 import PlusModal from "../components/studyroomWork/PlusModal";
+import ShareModal from "../components/studyroomWork/ShareModal";
 
 const StudyWork = () => {
   return (
@@ -14,7 +14,7 @@ const StudyWork = () => {
       <Line></Line>
       <Buttons>
         <PlusModal />
-        <Img src={ShareBtn} alt="share" />
+        <ShareModal />
       </Buttons>
       <Answer>A.</Answer>
       <ABox>
