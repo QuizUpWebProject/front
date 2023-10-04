@@ -2,11 +2,19 @@ import styled from "styled-components";
 import RecommendList from "../components/studyroomWork/RecommendList";
 import PlusModal from "../components/studyroomWork/PlusModal";
 import ShareModal from "../components/studyroomWork/ShareModal";
+import { useNavigate } from "react-router-dom";
 
 const StudyWork = () => {
+  const navigate = useNavigate();
+
   return (
     <Wrapper>
-      <Title>삼성 SW 역량테스트 기출문제 스터디방 {">"} 21번 문제 제목 </Title>
+      <Title>
+        <Span onClick={() => navigate("/study/:studyroomid")}>
+          삼성 SW 역량테스트 기출문제 스터디방
+        </Span>{" "}
+        {">"} 21번 문제 제목{" "}
+      </Title>
       <Question>Q.</Question>
       <QContent>
         문제 예시 입력 브라우저에서 렌더 트리를 구축하는 과정은 어떻게 될까요?
@@ -37,6 +45,13 @@ const Title = styled.div`
   font-size: 14.5px;
   color: #c9c9c9;
   margin-bottom: 30px;
+`;
+
+const Span = styled.span`
+  &:hover {
+    text-decoration: underline;
+    color: #ffffff;
+  }
 `;
 
 const Question = styled.div`
