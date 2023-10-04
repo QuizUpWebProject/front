@@ -65,10 +65,6 @@ const Buttons = styled.div`
   text-align: left;
 `;
 
-const Img = styled.img`
-  margin-right: 10px;
-`;
-
 const Answer = styled.div`
   color: #5263ff;
   font-size: 35px;
@@ -88,7 +84,7 @@ const ABox = styled.div`
 const ATextArea = styled.textarea`
   flex: 1;
   width: 958px;
-  height: 114px;
+  height: 95px;
   margin-right: 5px;
   margin-left: 10px;
   background-color: #8f8f8f;
