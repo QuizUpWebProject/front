@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import HelpIcon from "../assets/help.png";
 import { useState } from "react";
+import EvaluationModal from "../components/studyroomWorkAnswer/EvaluationModal";
 
 const StudyWorkAnswer = () => {
   // 답안 더보기 (toggle)
@@ -8,13 +8,6 @@ const StudyWorkAnswer = () => {
 
   const toggleShowMore = () => {
     setShowMore(!showMore);
-  };
-
-  // helpicon hover 시 나오는 문구
-  const [showToolTip, setToolTip] = useState(false);
-
-  const toggleToolTip = () => {
-    setToolTip(!showToolTip);
   };
 
   return (
@@ -48,22 +41,9 @@ const StudyWorkAnswer = () => {
         </Content>
         <Line></Line>
       </Container>
-      <Button>
-        문제 평가하기
-        {/* HelpIcon */}
-        <HelpIconWrapper
-          onMouseEnter={toggleToolTip}
-          onMouseLeave={toggleToolTip}
-        >
-          <Img src={HelpIcon} alt="help" />
-          {showToolTip && (
-            <Tooltip>
-              현재 학습한 문제의 학습 이해도를 평가해주세요. 기준에 따라 다시
-              학습 가능합니다.
-            </Tooltip>
-          )}
-        </HelpIconWrapper>
-      </Button>
+
+      {/* 문제 평가하기 버튼 */}
+      <EvaluationModal />
 
       <Container>
         <Title>스터디원이 입력한 답안 (3)</Title>
@@ -149,71 +129,6 @@ const Content = styled.div`
   color: #d1d1d1;
   margin-top: 30px;
   margin-bottom: 30px;
-`;
-
-const Button = styled.button`
-  width: 1090px;
-  height: 46px;
-  background-color: #5263ff;
-  border: none;
-  border-radius: 6px;
-  color: #d1d1d1;
-  font-size: 16px;
-  font-weight: 600;
-  margin-top: 40px;
-  margin-bottom: 70px;
-`;
-
-const Img = styled.img`
-  margin-left: 10px;
-  width: 17px;
-  height: 17px;
-`;
-
-const HelpIconWrapper = styled.div`
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-`;
-
-const Tooltip = styled.div`
-  background-color: #3f424e;
-  border: none;
-  color: #d1d1d1;
-  font-size: 12px;
-  font-weight: 500;
-  height: auto;
-  letter-spacing: -0.25px;
-  margin-top: 6.8px;
-  padding: 5px 11px;
-  position: absolute;
-  bottom: calc(100% + 6.8px);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;
-  width: 500px;
-
-  &::after {
-    background-color: #3f424e;
-    content: "";
-    display: block;
-    left: 75px;
-    position: absolute;
-    top: -7px;
-    width: 100%;
-    z-index: 1;
-  }
-
-  &::before {
-    border-width: 0 6px 8px 6.5px;
-    content: "";
-    display: block;
-    left: 75px;
-    position: absolute;
-    top: -8px;
-    width: 100%;
-    z-index: 0;
-  }
 `;
 
 const ShowMoreBtn = styled.button`
