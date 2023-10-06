@@ -12,7 +12,7 @@ const StudyWorkAnswer = () => {
 
   return (
     <Wrapper>
-      <div>
+      <Container>
         <Title>모범 답안</Title>
         <Line></Line>
         <Content>
@@ -25,8 +25,9 @@ const StudyWorkAnswer = () => {
           아니한다.
         </Content>
         <Line></Line>
-      </div>
-      <div>
+      </Container>
+
+      <Container>
         <Title>내가 입력한 답안</Title>
         <Line></Line>
         <Content>
@@ -39,13 +40,13 @@ const StudyWorkAnswer = () => {
           아니한다.
         </Content>
         <Line></Line>
-      </div>
+      </Container>
       <Button>
         문제 평가하기
         <Img src={HelpIcon} alt="help" />
       </Button>
 
-      <div>
+      <Container>
         <Title>스터디원이 입력한 답안 (3)</Title>
         <Line></Line>
         <Content>
@@ -58,12 +59,12 @@ const StudyWorkAnswer = () => {
           아니한다.
         </Content>
         <Line></Line>
-      </div>
+      </Container>
 
       {/* 스터디원이 입력한 답안 (더보기 버튼으로 추가 더보기) */}
       {showMore && (
         <>
-          <div>
+          <Container>
             <Title>스터디원이 입력한 답안 (3)</Title>
             <Line></Line>
             <Content>
@@ -76,8 +77,8 @@ const StudyWorkAnswer = () => {
               있어서 차별을 받지 아니한다.
             </Content>
             <Line></Line>
-          </div>
-          <div>
+          </Container>
+          <Container>
             <Title>스터디원이 입력한 답안 (3)</Title>
             <Line></Line>
             <Content>
@@ -90,7 +91,7 @@ const StudyWorkAnswer = () => {
               있어서 차별을 받지 아니한다.
             </Content>
             <Line></Line>
-          </div>
+          </Container>
         </>
       )}
       <ShowMoreBtn onClick={toggleShowMore}>
@@ -105,6 +106,10 @@ export default StudyWorkAnswer;
 const Wrapper = styled.div`
   max-width: 1090px;
   margin: 0 auto;
+`;
+
+const Container = styled.div`
+  margin-bottom: 60px;
 `;
 
 const Title = styled.div`
@@ -123,6 +128,8 @@ const Content = styled.div`
   font-size: 16px;
   font-size: 500;
   color: #d1d1d1;
+  margin-top: 30px;
+  margin-bottom: 30px;
 `;
 
 const Button = styled.button`
@@ -153,4 +160,5 @@ const ShowMoreBtn = styled.button`
   color: #ffffff;
   font-size: 14px;
   font-weight: 500;
+  margin-bottom: 35px;
 `;
