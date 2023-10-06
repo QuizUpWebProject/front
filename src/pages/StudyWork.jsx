@@ -27,7 +27,11 @@ const StudyWork = () => {
       <Answer>A.</Answer>
       <ABox>
         <ATextArea placeholder="정답을 입력해주세요" type="text-area" />
-        <AButton>제출</AButton>
+        <AButton
+          onClick={() => navigate("/study/:studyroonid/worklistid/answer")}
+        >
+          제출
+        </AButton>
       </ABox>
       <RecommendList />
     </Wrapper>
