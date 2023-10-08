@@ -32,11 +32,12 @@ const SelectContainer = styled.div`
   position: relative;
   width: 866px;
   height: 42px;
-  padding: 8px;
+  padding: 5px;
   background-color: #3f424e;
   align-self: center;
   border-radius: 6px;
   cursor: pointer;
+  z-index: 1;
 `;
 
 const Label = styled.label`
