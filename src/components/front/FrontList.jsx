@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import FrontItem from "./FrontItem";
+import SearchBar from "./SearchBar";
 import usePagination from "../../hooks/usePagination";
 import LeftIcon from "../../assets/left.png";
 import RightIcon from "../../assets/right.png";
@@ -112,6 +113,7 @@ export default function FrontList() {
           </SortButton>
         </SortOptions>
 
+        <SearchBar />
       </Container>
 
       {/* 필터링된 스터디 리스트 표시 */}
