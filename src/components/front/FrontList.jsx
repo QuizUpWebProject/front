@@ -1,9 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import FrontItem from "./FrontItem";
 import usePagination from "../../hooks/usePagination";
 import LeftIcon from "../../assets/left.png";
 import RightIcon from "../../assets/right.png";
+
+function isEqual(arr1, arr2) {
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i].id !== arr2[i].id) {
+      return false;
+    }
+  }
+
+  return true;
+}
 
 export default function FrontList() {
   // 임시 프론트 문제집 data 
@@ -28,7 +42,7 @@ export default function FrontList() {
     {id: 18, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-09-28", user: "소밍밍", like: 10, cmt: 50},
     {id: 19, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-09-27", user: "소밍밍", like: 10, cmt: 11},
   ];
-
+  const [sortOption, setSortOption] = useState('latest'); // 초기 정렬 기준 : 최신순
   const [data, setData] = useState(frontData); // 데이터 상태 정의
 
   const itemsPerPage = 15; // 페이지 당 보여줄 아이템 수
@@ -44,8 +58,62 @@ export default function FrontList() {
     itemsPerPage
   );
 
+  useEffect(() => {
+    // 문제집 리스트 정렬
+    const sortData = (sortKey) => {
+      const sortedData = [...data]; // 원본 데이터를 변경하지 않기 위해 복사
+
+      if (sortKey === 'latest') {
+        sortedData.sort((a, b) => new Date(b.date) - new Date(a.date)); // 최신순
+      } else if (sortKey === 'oldest') {
+        sortedData.sort((a, b) => new Date(a.date) - new Date(b.date)); // 등록순
+      } else if (sortKey === 'highestRated') {
+        sortedData.sort((a, b) => b.like - a.like);                     // 평점 높은순
+      } else if (sortKey === 'mostCommented') {
+        sortedData.sort((a, b) => b.cmt - a.cmt);                       // 댓글순
+      }
+
+      return sortedData;
+    };
+    const sortedData = sortData(sortOption);
+    // 정렬된 데이터와 현재 데이터가 다를 경우에만 업데이트
+    if (!isEqual(sortedData, data)) {
+      setData(sortedData);
+    }
+  }, [sortOption, data]);
+
   return(
     <div>
+      <Container>
+        <SortOptions>
+          <SortButton
+            onClick={() => setSortOption('latest')}
+            active={sortOption === 'latest'}
+          >
+            최신순
+          </SortButton>
+          <SortButton
+            onClick={() => setSortOption('oldest')}
+            active={sortOption === 'oldest'}
+          >
+            등록순
+          </SortButton>
+          <SortButton
+            onClick={() => setSortOption('highestRated')}
+            active={sortOption === 'highestRated'}
+          >
+            평점 높은순
+          </SortButton>
+          <SortButton
+            onClick={() => setSortOption('mostCommented')}
+            active={sortOption === 'mostCommented'}
+          >
+            댓글순
+          </SortButton>
+        </SortOptions>
+
+      </Container>
+
       {/* 필터링된 스터디 리스트 표시 */}
       <div>
         {/* 현재 페이지의 아이템 렌더링 */}
@@ -75,6 +143,27 @@ export default function FrontList() {
     </div>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const SortOptions = styled.div`
+  align-items: center;
+  display: flex;
+  padding: 5px 0;
+`;
+
+const SortButton = styled.button`
+  margin-right: 15spx;
+  background-color: transparent;
+  color: ${(props) => (props.active ? '#FFFFFF' : '#838383')};
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+`;
 
 const PaginationContainer = styled.div`
   display: flex;
