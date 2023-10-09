@@ -116,7 +116,7 @@ export default function FrontList() {
         <SearchBar />
       </Container>
 
-      {/* 필터링된 스터디 리스트 표시 */}
+      {/* 필터링된 프론트 문제집 리스트 표시 */}
       <div>
         {/* 현재 페이지의 아이템 렌더링 */}
         {currentItems.map((front, index) => (
