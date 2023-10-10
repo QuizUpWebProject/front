@@ -7,6 +7,7 @@ const StudyMake = () => {
   const [isDuplicate, setIsDuplicate] = useState(false); // 중복 확인 상태관리
   const [code, setCode] = useState(""); // 비공개 코드 상태관리
   const [isCodeValid, setIsCodeValid] = useState(true); // 비공개 코드 유효성 검사
+  const [introduction, setIntroduction] = useState(""); // textarea 글자 제한 유효성 검사
 
   // 중복 확인 버튼
   const handleCheckDuplicate = () => {
@@ -22,6 +23,13 @@ const StudyMake = () => {
     setIsCodeValid(isValid);
     setCode(inputValue);
   };
+
+  const handleIntroduction = (event) => {
+    const inputValue = event.target.value;
+    setIntroduction(inputValue);
+  };
+
+  const isIntroductionTooLong = introduction.length > 100000;
 
   return (
     <Wrapper>
@@ -79,7 +87,17 @@ const StudyMake = () => {
 
       <Container>
         <Title>소개글</Title>
-        <IntroduceArea placeholder="궁금할 스터디원들에게 어떤 스터디방인지 설명해주세요. ex) 규칙사항, 준비하는 문제에 대해 간략하게 적어보세요." />
+        <IntroduceArea
+          placeholder="궁금할 스터디원들에게 어떤 스터디방인지 설명해주세요. ex) 규칙사항, 준비하는 문제에 대해 간략하게 적어보세요."
+          value={introduction}
+          onChange={handleIntroduction}
+        />
+        <CharCountText>{introduction.length} / 100,000</CharCountText>
+        {isIntroductionTooLong && (
+          <IntroductionErrorMessage>
+            해당 글자수를 초과하였습니다. 글자수를 줄여주세요.
+          </IntroductionErrorMessage>
+        )}
       </Container>
 
       <MakeBtn>방 만들기</MakeBtn>
@@ -202,6 +220,20 @@ const IntroduceArea = styled.textarea`
     font-size: 14px;
     font-weight: 400;
   }
+`;
+
+const CharCountText = styled.div`
+  font-size: 13px;
+  color: #939393;
+  margin-top: 5px;
+  text-align: right;
+`;
+
+const IntroductionErrorMessage = styled.div`
+  font-size: 13px;
+  font-weight: 600;
+  color: #ff0000;
+  margin-top: 5px;
 `;
 
 const MakeBtn = styled.button`
