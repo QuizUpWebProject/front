@@ -2,12 +2,19 @@ import styled from "styled-components";
 import SelectCategory from "../components/studyroomMake/SelectCategory";
 import SelectPeople from "../components/studyroomMake/SelectPeople";
 import { useState } from "react";
+import useModal from "../hooks/useModal";
 
 const StudyMake = () => {
   const [isDuplicate, setIsDuplicate] = useState(false); // 중복 확인 상태관리
   const [code, setCode] = useState(""); // 비공개 코드 상태관리
   const [isCodeValid, setIsCodeValid] = useState(true); // 비공개 코드 유효성 검사
   const [introduction, setIntroduction] = useState(""); // textarea 글자 제한 유효성 검사
+  const [groupName, setGroupName] = useState(""); // 그룹명 상태관리
+  const [category, setCategory] = useState(""); // 카테고리 상태관리
+  const [peopleLimit, setPeopleLimit] = useState(""); // 제한 인원수 상태관리
+
+  // useModal 사용해서 그룹방 탈퇴 모달 구현
+  const { openModal, Modal } = useModal();
 
   // 중복 확인 버튼
   const handleCheckDuplicate = () => {
@@ -29,7 +36,41 @@ const StudyMake = () => {
     setIntroduction(inputValue);
   };
 
+  // 그룹명 입력 시 상태 업데이트
+  const handleGroupName = (event) => {
+    const inputValue = event.target.value;
+    setGroupName(inputValue);
+  };
+
+  // 카테고리 선택 시 상태 업데이트
+  const handleCategory = (selectedCategory) => {
+    setCategory(selectedCategory);
+  };
+
+  // 제한 인원수 선택 시 상태 업데이트
+  const handlePeopleLimit = (selectedLimit) => {
+    setPeopleLimit(selectedLimit);
+  };
+
+  // 버튼 활성화 조건
+  // const isButtonEnabled =
+  //   groupName !== "" && category !== "" && peopleLimit !== "";
+
+  // textarea 글자수 제한
   const isIntroductionTooLong = introduction.length > 100000;
+
+  // 만들기 btn 클릭
+  const handleCreateStudy = () => {
+    // if (!isButtonEnabled) {
+    //   alert("그룹명, 카테고리, 제한 인원수를 모두 입력해야 합니다");
+    //   return;
+    // }
+
+    // modal open
+    openModal();
+
+    console.log("click");
+  };
 
   return (
     <Wrapper>
@@ -38,7 +79,7 @@ const StudyMake = () => {
           그룹명<span>*</span>
         </Title>
         <GroupNameContainer>
-          <GroupNameInput />
+          <GroupNameInput value={groupName} onChange={handleGroupName} />
           <ConfirmBtn onClick={handleCheckDuplicate}>중복 확인</ConfirmBtn>
         </GroupNameContainer>
         <GrouptNameText>사용 가능한 특수문자는 (_/-/@/.)입니다.</GrouptNameText>
@@ -54,7 +95,10 @@ const StudyMake = () => {
           그룹 카테고리<span>*</span>
         </Title>
         {/* select (front/back) */}
-        <SelectCategory />
+        <SelectCategory
+          selectedCategory={category}
+          onCategoryChange={handleCategory}
+        />
       </Container>
 
       <Container>
@@ -62,7 +106,10 @@ const StudyMake = () => {
           제한 인원수<span>*</span>
         </Title>
         {/* select (1~50) */}
-        <SelectPeople />
+        <SelectPeople
+          selectedLimit={peopleLimit}
+          onPeopleLimitChange={handlePeopleLimit}
+        />
       </Container>
 
       <Container>
@@ -100,7 +147,17 @@ const StudyMake = () => {
         )}
       </Container>
 
-      <MakeBtn>방 만들기</MakeBtn>
+      <MakeBtn onClick={handleCreateStudy}>방 만들기</MakeBtn>
+
+      {/* modal */}
+      <Modal style={{ width: "400px", height: "220px" }}>
+        <ModalContent>
+          <div>
+            <ModalBody>축하합니다! 스터디방이 만들어졌습니다.</ModalBody>
+          </div>
+          <Button>스터디방으로 이동하기</Button>
+        </ModalContent>
+      </Modal>
     </Wrapper>
   );
 };
@@ -247,4 +304,33 @@ const MakeBtn = styled.button`
   font-weight: 500;
   margin-top: 20px;
   margin-bottom: 50px;
+`;
+
+const ModalContent = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  margin-top: 60px;
+  font-size: 14px;
+  text-align: center;
+`;
+
+const ModalBody = styled.div`
+  margin-bottom: 20px;
+  color: #c7c7c7;
+  text-align: center;
+  margin-bottom: 30px;
+`;
+
+const Button = styled.button`
+  width: 301px;
+  height: 37px;
+  background-color: #5263ff;
+  font-size: 14px;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  margin-top: 20px;
 `;
