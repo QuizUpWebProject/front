@@ -1,45 +1,86 @@
 import styled from "styled-components";
 import SelectCategory from "../components/studyroomMake/SelectCategory";
 import SelectPeople from "../components/studyroomMake/SelectPeople";
+import { useState } from "react";
 
 const StudyMake = () => {
+  const [isDuplicate, setIsDuplicate] = useState(false); // 중복 확인 상태관리
+  const [code, setCode] = useState(""); // 비공개 코드 상태관리
+  const [isCodeValid, setIsCodeValid] = useState(true); // 비공개 코드 유효성 검사
+
+  // 중복 확인 버튼
+  const handleCheckDuplicate = () => {
+    // 중복 확인 로직 추가 예정
+    setIsDuplicate(true);
+  };
+
+  const handleCode = (event) => {
+    const inputValue = event.target.value;
+
+    // 정규식으로 유효성 검사
+    const isValid = /^\d{4}$/.test(inputValue);
+    setIsCodeValid(isValid);
+    setCode(inputValue);
+  };
+
   return (
     <Wrapper>
-      <div>
-        <div>그룹명*</div>
-        <div>
+      <Container>
+        <Title>
+          그룹명<span>*</span>
+        </Title>
+        <GroupNameContainer>
           <GroupNameInput />
-          <ConfirmBtn>중복 확인</ConfirmBtn>
-        </div>
-        <div>사용 가능한 특수문자는 (_/-/@/.)입니다.</div>
-      </div>
+          <ConfirmBtn onClick={handleCheckDuplicate}>중복 확인</ConfirmBtn>
+        </GroupNameContainer>
+        <GrouptNameText>사용 가능한 특수문자는 (_/-/@/.)입니다.</GrouptNameText>
+        {isDuplicate && (
+          <CheckText>
+            현재 입력한 그룹방은 이미 있는 그룹방 입니다. 새로 입력해주세요.
+          </CheckText>
+        )}
+      </Container>
 
-      <div>
-        <div>그룹 카테고리*</div>
+      <Container>
+        <Title>
+          그룹 카테고리<span>*</span>
+        </Title>
         {/* select (front/back) */}
         <SelectCategory />
-      </div>
+      </Container>
 
-      <div>
-        <div>제한 인원수*</div>
+      <Container>
+        <Title>
+          제한 인원수<span>*</span>
+        </Title>
         {/* select (1~50) */}
         <SelectPeople />
-      </div>
+      </Container>
 
-      <div>
-        <div>
-          참여코드 (선택사항) 공개 스터디방으로 원할 경우 빈칸으로 제출하세요.
-        </div>
+      <Container>
+        <CodeTitle>
+          참여코드{"   "}
+          <CodeText>
+            (선택사항) 공개 스터디방으로 원할 경우 빈칸으로 제출하세요.
+          </CodeText>
+        </CodeTitle>
         <CodeInput
-          text="password"
+          type="password"
           placeholder="참여코드 설정은 숫자 4자리 입니다."
+          value={code}
+          onChange={handleCode}
         />
-      </div>
+        {!isCodeValid && (
+          <CodeErrorMessage>
+            참여코드는 4자리 숫자로 입력해야 합니다.
+          </CodeErrorMessage>
+        )}
+      </Container>
 
-      <div>
-        <div>소개글</div>
+      <Container>
+        <Title>소개글</Title>
         <IntroduceArea placeholder="궁금할 스터디원들에게 어떤 스터디방인지 설명해주세요. ex) 규칙사항, 준비하는 문제에 대해 간략하게 적어보세요." />
-      </div>
+      </Container>
 
       <MakeBtn>방 만들기</MakeBtn>
     </Wrapper>
@@ -51,6 +92,27 @@ export default StudyMake;
 const Wrapper = styled.div`
   max-width: 1090px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Container = styled.div`
+  margin-bottom: 50px;
+`;
+
+const Title = styled.div`
+  fontsize: 16px;
+  font-weight: 600;
+  margin-bottom: 15px;
+
+  span {
+    color: #ff0000;
+  }
+`;
+
+const GroupNameContainer = styled.div`
+  margin-bottom: 15px;
 `;
 
 const GroupNameInput = styled.input`
@@ -76,6 +138,18 @@ const ConfirmBtn = styled.button`
   margin-left: 20px;
 `;
 
+const GrouptNameText = styled.div`
+  font-size: 13px;
+  font-weight: 400;
+  color: #939393;
+`;
+
+const CheckText = styled.div`
+  font-size: 13px;
+  font-weight: 400;
+  color: #ff0000;
+`;
+
 const CodeInput = styled.input`
   width: 866px;
   height: 42px;
@@ -91,6 +165,26 @@ const CodeInput = styled.input`
     font-size: 14px;
     font-weight: 400;
   }
+`;
+
+const CodeTitle = styled.div`
+  fontsize: 16px;
+  font-weight: 600;
+  margin-bottom: 15px;
+`;
+
+const CodeText = styled.span`
+  font-size: 10px;
+  font-weight: 400;
+  color: #939393;
+  margin-left: 10px;
+`;
+
+const CodeErrorMessage = styled.div`
+  font-size: 13px;
+  font-weight: 600;
+  color: #ff0000;
+  margin-top: 5px;
 `;
 
 const IntroduceArea = styled.textarea`
@@ -119,4 +213,6 @@ const MakeBtn = styled.button`
   color: #ffffff;
   font-size: 14px;
   font-weight: 500;
+  margin-top: 20px;
+  margin-bottom: 50px;
 `;
