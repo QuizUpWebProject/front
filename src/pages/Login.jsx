@@ -21,4 +21,5 @@ const Title = styled.div`
   color: #5263ff;
   font-size: 40px;
   font-weight: 600;
+  margin-bottom: 30px;
 `;
