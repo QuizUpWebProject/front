@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-export default function JoinTitle() {
+export default function JoinTitle({ section1, section2, section3 }) {
   return (
     <TitleContainer>
       <Join>회원가입</Join>
       <SectionBox>
-        <JoinSection>① 약관동의</JoinSection>
-        <JoinSection>② 정보입력</JoinSection>
-        <JoinSection>③ 가입 완료</JoinSection>
+        <JoinSection color={section1}>① 약관동의</JoinSection>
+        <JoinSection color={section2}>② 정보입력</JoinSection>
+        <JoinSection color={section3}>③ 가입완료</JoinSection>
       </SectionBox>
     </TitleContainer>
   );
@@ -33,6 +33,6 @@ const SectionBox = styled.div`
 const JoinSection = styled.div`
   font-size: 15px;
   font-weight: 500;
-  color: #7e7e7e;
+  color: ${(props) => props.color || "#7e7e7e"};
   margin-right: 40px;
 `;

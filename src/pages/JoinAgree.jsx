@@ -1,9 +1,17 @@
+import styled from "styled-components";
+import JoinTitle from "../components/join/JoinTitle";
+
 const JoinAgree = () => {
-    return (
-        <div>
-            회원가입 개인정보 동의 페이지입니다
-        </div>
-    )
-}
+  return (
+    <Wrapper>
+      <JoinTitle section1="#5263ff" />
+    </Wrapper>
+  );
+};
 
 export default JoinAgree;
+
+const Wrapper = styled.div`
+  max-width: 900px;
+  margin: 0 auto;
+`;
