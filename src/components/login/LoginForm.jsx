@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import CheckIcon from "../../assets/circle check_.png";
+import CheckIcon from "../../assets/check_icon.png";
+import CheckedIcon from "../../assets/check_ed_icon.png";
 import { useState } from "react";
 
 export default function LoginForm() {
@@ -38,7 +39,11 @@ export default function LoginForm() {
         isChecked={isChecked} // isChecked 상태 전달
       >
         <CheckLabel>
-          <Img src={CheckIcon} alt="check" isChecked={isChecked} />
+          <Img
+            src={isChecked ? CheckedIcon : CheckIcon}
+            alt="check"
+            isChecked={isChecked}
+          />
           로그인 상태 유지하기
         </CheckLabel>
       </CheckContainer>
@@ -122,7 +127,6 @@ const CheckContainer = styled.button`
 
 const Img = styled.img`
   margin-right: 10px;
-  filter: ${(props) => (props.isChecked ? "invert(100%)" : "inherit")};
 `;
 
 const CheckLabel = styled.label`
