@@ -1,15 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import useModal from "../../hooks/useModal";
+import EmailCheck from "./EmailCheck";
+import NicknameCheck from "./NicknameCheck";
 
 export default function JoinForm() {
   const navigate = useNavigate();
-  const { openModal, Modal, closeModal } = useModal();
-
-  // 아이디 중복 확인
-  const [email, setEmail] = useState("");
-  const emailRegex = /^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}$/;
 
   // 비밀번호 확인
   const [password, setPassword] = useState("");
@@ -17,15 +13,6 @@ export default function JoinForm() {
   const [isValid, setIsValid] = useState(true); // 비밀번호 유효성 검사
   const [isError, setIsError] = useState(false); // 비밀번호 확인 후 안내 message
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d|[\W_]).{8,13}$/;
-
-  const handleCheckEmail = () => {
-    if (!emailRegex.test(email)) {
-      openModal();
-    } else {
-      // 중복 확인 후 맞으면? 우선 alert 생성
-      alert("확인되었습니다.");
-    }
-  };
 
   const handleCheckPassword = () => {
     const isPasswordValid = passwordRegex.test(password);
@@ -42,30 +29,7 @@ export default function JoinForm() {
 
   return (
     <Wrapper>
-      <Container>
-        <Label>
-          아이디<span>*</span>
-        </Label>
-        <div>
-          <SInput
-            placeholder="이메일을 입력해주세요."
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <CheckBtn onClick={handleCheckEmail}>중복 확인</CheckBtn>
-        </div>
-        <Text>사용 가능한 특수문자는 (_/-/@/.)입니다.</Text>
-      </Container>
-
-      {/* 아이디 중복 확인 modal */}
-      <Modal style={{ width: "400px", height: "220px" }}>
-        <ModalContent>
-          <div>
-            <ModalBody>이메일 형식이 올바르지 않습니다.</ModalBody>
-          </div>
-          <ModalButton onClick={closeModal}>확인</ModalButton>
-        </ModalContent>
-      </Modal>
+      <EmailCheck />
 
       <Container>
         <Label>
@@ -96,16 +60,7 @@ export default function JoinForm() {
         )}
       </Container>
 
-      <Container>
-        <Label>
-          닉네임<span>*</span>
-        </Label>
-        <div>
-          <SInput placeholder="사용하실 닉네임을 입력해주세요." />
-          <CheckBtn>중복 확인</CheckBtn>
-        </div>
-        <Text>최대 5글자까지 허용 (특수문자는 사용하실 수 없습니다)</Text>
-      </Container>
+      <NicknameCheck />
 
       <Button onClick={() => navigate("/joinend")}>가입완료</Button>
     </Wrapper>
@@ -130,38 +85,6 @@ const Label = styled.div`
   span {
     color: #ff0000;
   }
-`;
-
-const SInput = styled.input`
-  width: 642px;
-  height: 42px;
-  background-color: #3f424e;
-  border: none;
-  border-radius: 6px;
-  color: #ffffff;
-  padding: 5px;
-  margin-bottom: 15px;
-  margin-right: 20px;
-
-  &::placeholder {
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 400;
-    padding: 5px;
-  }
-`;
-
-const CheckBtn = styled.button`
-  width: 180px;
-  height: 42px;
-  border: none;
-  border-radius: 5px;
-  background-color: #5263ff;
-  color: #ffffff;
-  margin-left: 20px;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 29px;
 `;
 
 const Input = styled.input`
@@ -209,33 +132,4 @@ const Button = styled.button`
   line-height: 29px;
   margin-top: 20px;
   margin-bottom: 20px;
-`;
-
-const ModalContent = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-  margin-top: 60px;
-  font-size: 14px;
-  text-align: center;
-`;
-
-const ModalBody = styled.div`
-  margin-bottom: 20px;
-  color: #c7c7c7;
-  text-align: center;
-  margin-bottom: 30px;
-`;
-
-const ModalButton = styled.button`
-  width: 301px;
-  height: 37px;
-  background-color: #5263ff;
-  font-size: 14px;
-  color: #ffffff;
-  border: none;
-  border-radius: 6px;
-  margin-top: 20px;
 `;
