@@ -7,6 +7,7 @@ import UserIcon from "../assets/people.png";
 import LikeBtn from "../assets/Btn_like.png";
 import AllBtn from "../assets/Btn_all.png";
 import WorkList from "../components/frontWorkList/WorkList";
+import CommentList from "../components/frontWorkList/CommentList";
 
 const FrontWorkList = () => {
     const [textValue, setTextValue] = useState(0);    // 추천수 올리기
@@ -46,13 +47,15 @@ const FrontWorkList = () => {
       </TopSection>
 
       <WorkList />
+
+      <CommentList />
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
   max-width: 1090px;
-  margin: 0 auto;
+  margin: 0 auto 50px;
 `;
 
 const TopSection = styled.div`
