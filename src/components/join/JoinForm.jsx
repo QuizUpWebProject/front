@@ -1,8 +1,25 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import useModal from "../../hooks/useModal";
 
 export default function JoinForm() {
   const navigate = useNavigate();
+
+  // 아이디 중복 확인
+  const [email, setEmail] = useState("");
+  const { openModal, Modal, closeModal } = useModal();
+
+  const handleCheckEmail = () => {
+    const emailRegex = /^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}$/;
+
+    if (!emailRegex.test(email)) {
+      openModal();
+    } else {
+      // 중복 확인 후 맞으면? 우선 alert 생성
+      alert("확인되었습니다.");
+    }
+  };
 
   return (
     <Wrapper>
@@ -11,11 +28,25 @@ export default function JoinForm() {
           아이디<span>*</span>
         </Label>
         <div>
-          <SInput placeholder="이메일을 입력해주세요." />
-          <CheckBtn>중복 확인</CheckBtn>
+          <SInput
+            placeholder="이메일을 입력해주세요."
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <CheckBtn onClick={handleCheckEmail}>중복 확인</CheckBtn>
         </div>
         <Text>사용 가능한 특수문자는 (_/-/@/.)입니다.</Text>
       </Container>
+
+      {/* 아이디 중복 확인 modal */}
+      <Modal style={{ width: "400px", height: "220px" }}>
+        <ModalContent>
+          <div>
+            <ModalBody>이메일 형식이 올바르지 않습니다.</ModalBody>
+          </div>
+          <ModalButton onClick={closeModal}>확인</ModalButton>
+        </ModalContent>
+      </Modal>
 
       <Container>
         <Label>
@@ -134,4 +165,33 @@ const Button = styled.button`
   line-height: 29px;
   margin-top: 20px;
   margin-bottom: 20px;
+`;
+
+const ModalContent = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  margin-top: 60px;
+  font-size: 14px;
+  text-align: center;
+`;
+
+const ModalBody = styled.div`
+  margin-bottom: 20px;
+  color: #c7c7c7;
+  text-align: center;
+  margin-bottom: 30px;
+`;
+
+const ModalButton = styled.button`
+  width: 301px;
+  height: 37px;
+  background-color: #5263ff;
+  font-size: 14px;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  margin-top: 20px;
 `;
