@@ -61,7 +61,7 @@ const Background = styled.div`
 `;
 
 const ModalBlock = styled.div`
-  position: absolute;
+  position: fixed;
   top: 6.5rem;
   border-radius: 13px;
   padding: 1.5rem;
