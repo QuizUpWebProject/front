@@ -2,11 +2,11 @@ import { useState } from "react";
 import styled from "styled-components";
 import useModal from "../../hooks/useModal";
 
-export default function EmailCheck() {
+export default function EmailCheck({ email, setEmail }) {
   const { openModal, Modal, closeModal } = useModal();
 
   // 아이디 중복 확인
-  const [email, setEmail] = useState("");
+  //const [email, setEmail] = useState("");
   const emailRegex = /^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}$/;
   const [isValid, setIsValid] = useState(true); // 유효성 검사
 

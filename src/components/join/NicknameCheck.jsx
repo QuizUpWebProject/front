@@ -2,11 +2,11 @@ import { useState } from "react";
 import styled from "styled-components";
 import useModal from "../../hooks/useModal";
 
-export default function NicknameCheck() {
+export default function NicknameCheck({ nickname, setNickname }) {
   const { openModal, Modal, closeModal } = useModal();
 
   // 아이디 중복 확인
-  const [nickname, setNickname] = useState("");
+  //const [nickname, setNickname] = useState("");
   const nicknameRegex = /^[a-zA-Z0-9]{1,5}$/;
   const [isValid, setIsValid] = useState(true); // 유효성 검사
 
