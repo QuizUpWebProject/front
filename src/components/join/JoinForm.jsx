@@ -5,19 +5,38 @@ import useModal from "../../hooks/useModal";
 
 export default function JoinForm() {
   const navigate = useNavigate();
+  const { openModal, Modal, closeModal } = useModal();
 
   // 아이디 중복 확인
   const [email, setEmail] = useState("");
-  const { openModal, Modal, closeModal } = useModal();
+  const emailRegex = /^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}$/;
+
+  // 비밀번호 확인
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setpasswordConfirm] = useState("");
+  const [isValid, setIsValid] = useState(true); // 비밀번호 유효성 검사
+  const [isError, setIsError] = useState(false); // 비밀번호 확인 후 안내 message
+  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d|[\W_]).{8,13}$/;
 
   const handleCheckEmail = () => {
-    const emailRegex = /^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}$/;
-
     if (!emailRegex.test(email)) {
       openModal();
     } else {
       // 중복 확인 후 맞으면? 우선 alert 생성
       alert("확인되었습니다.");
+    }
+  };
+
+  const handleCheckPassword = () => {
+    const isPasswordValid = passwordRegex.test(password);
+    const passwordsMatch = password === passwordConfirm;
+
+    setIsValid(isPasswordValid);
+
+    if (!passwordsMatch) {
+      setIsError(true);
+    } else {
+      setIsError(false);
     }
   };
 
@@ -52,11 +71,29 @@ export default function JoinForm() {
         <Label>
           비밀번호<span>*</span>
         </Label>
-        <Input placeholder="비밀번호를 입력해주세요. " />
-        <Text>
+        <Input
+          type="password"
+          placeholder="비밀번호를 입력해주세요. "
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Text
+          style={{
+            color: isValid ? "#939393" : "#ff0000",
+          }}
+        >
           영문,숫자,특수문자 중 2가지 이상의 문자조합 8-13자로 입력해주세요.
         </Text>
-        <Input placeholder="비밀번호를 다시 한번 더 입력해주세요." />
+        <Input
+          type="password"
+          placeholder="비밀번호를 다시 한번 더 입력해주세요."
+          value={passwordConfirm}
+          onChange={(e) => setpasswordConfirm(e.target.value)}
+          onBlur={handleCheckPassword}
+        />
+        {isError && (
+          <PasswordMisMatch>비밀번호가 일치하지 않습니다.</PasswordMisMatch>
+        )}
       </Container>
 
       <Container>
@@ -151,6 +188,13 @@ const Text = styled.div`
   font-weight: 400;
   line-height: 29px;
   margin-bottom: 15px;
+`;
+
+const PasswordMisMatch = styled.div`
+  color: #ff0000;
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 10px;
 `;
 
 const Button = styled.button`
