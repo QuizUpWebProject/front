@@ -6,6 +6,7 @@ import CmtIcon from "../assets/chat.png";
 import UserIcon from "../assets/people.png";
 import LikeBtn from "../assets/Btn_like.png";
 import AllBtn from "../assets/Btn_all.png";
+import WorkList from "../components/frontWorkList/WorkList";
 
 const FrontWorkList = () => {
     const [textValue, setTextValue] = useState(0);    // 추천수 올리기
@@ -44,6 +45,7 @@ const FrontWorkList = () => {
         </TopContent>
       </TopSection>
 
+      <WorkList />
     </Wrapper>
   );
 };
