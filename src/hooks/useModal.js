@@ -62,7 +62,9 @@ const Background = styled.div`
 
 const ModalBlock = styled.div`
   position: fixed;
-  top: 6.5rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   border-radius: 13px;
   padding: 1.5rem;
   background-color: #262631;
