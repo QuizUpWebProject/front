@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import JoinTitle from "../components/join/JoinTitle";
-import Emotion from "../assets/Emotion_1.png";
+import Emotion from "../assets/joinend.png";
 import { useNavigate } from "react-router-dom";
 
 const JoinEnd = () => {
@@ -32,8 +32,6 @@ const Text = styled.div`
 `;
 
 const Img = styled.img`
-  width: 154px;
-  height: 154px;
   display: block;
   margin: 0 auto;
   margin-top: 30px;
