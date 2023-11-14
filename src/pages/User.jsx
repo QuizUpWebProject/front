@@ -5,12 +5,16 @@ import MyWorkSlide from "../components/user/MyWorkSlide";
 import StudyWorkSlide from '../components/user/StudyWorkSlide';
 import Footer from '../shared/Footer';
 import Profile from "../components/user/Profile";
+import LikeModal from "../components/user/LikeModal";
 
 const User = () => {
   return (
     <Wrapper>
       <TopSection>
         <Profile />
+        <div>
+          <LikeModal />
+        </div>
       </TopSection>
       <Line1 />
       <TitleSection>
@@ -38,6 +42,7 @@ const Wrapper = styled.div`
 
 const TopSection = styled.div`
   display: flex;
+  justify-content: space-between;
 `;
 
 const Line1 = styled.hr`
