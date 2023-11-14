@@ -4,10 +4,14 @@ import Dropdown from "../components/user/StudyDropdown";
 import MyWorkSlide from "../components/user/MyWorkSlide";
 import StudyWorkSlide from '../components/user/StudyWorkSlide';
 import Footer from '../shared/Footer';
+import Profile from "../components/user/Profile";
 
 const User = () => {
   return (
     <Wrapper>
+      <TopSection>
+        <Profile />
+      </TopSection>
       <Line1 />
       <TitleSection>
         <Title>나의 문제집 [4]</Title>
@@ -30,6 +34,10 @@ const User = () => {
 const Wrapper = styled.div`
   max-width: 1090px;
   margin: 0 auto;
+`;
+
+const TopSection = styled.div`
+  display: flex;
 `;
 
 const Line1 = styled.hr`
