@@ -6,15 +6,17 @@ import StudyWorkSlide from '../components/user/StudyWorkSlide';
 import Footer from '../shared/Footer';
 import Profile from "../components/user/Profile";
 import LikeModal from "../components/user/LikeModal";
+import CmtModal from "../components/user/CmtModal";
 
 const User = () => {
   return (
     <Wrapper>
       <TopSection>
         <Profile />
-        <div>
+        <Modals>
           <LikeModal />
-        </div>
+          <CmtModal />
+        </Modals>
       </TopSection>
       <Line1 />
       <TitleSection>
@@ -43,6 +45,11 @@ const Wrapper = styled.div`
 const TopSection = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const Modals = styled.div`
+  display: flex;
+  gap: 55px;
 `;
 
 const Line1 = styled.hr`
