@@ -5,8 +5,8 @@ import usePagination from "../../hooks/usePagination";
 import LeftIcon from "../../assets/left.png";
 import RightIcon from "../../assets/right.png";
  
-export default function FrontList() {
-  // 임시 프론트 문제집 data 
+export default function LikeList() {
+  // 임시 좋아요 내역 data 
   const likeData = [
     {id: 1, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-15", user: "소밍밍", like: 10, cmt: 5},
     {id: 2, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-14", user: "소밍밍", like: 2, cmt: 5},
