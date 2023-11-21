@@ -7,6 +7,7 @@ import Footer from '../shared/Footer';
 import Profile from "../components/user/Profile";
 import LikeModal from "../components/user/LikeModal";
 import CmtModal from "../components/user/CmtModal";
+import { Link } from "react-router-dom";
 
 const User = () => {
   return (
@@ -21,7 +22,9 @@ const User = () => {
       <Line1 />
       <TitleSection>
         <Title>나의 문제집 [4]</Title>
-        <Icon src={MakeWork} alt="문제집 만들기"/>
+        <ImageLink to="/workmake">
+          <Icon src={MakeWork} alt="문제집 만들기"/>
+        </ImageLink>
       </TitleSection>
       <MyWorkSlide />
 
@@ -45,6 +48,10 @@ const Wrapper = styled.div`
 const TopSection = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const ImageLink = styled(Link)`
+  text-decoration: none;
 `;
 
 const Modals = styled.div`
