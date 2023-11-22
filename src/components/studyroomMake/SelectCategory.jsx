@@ -2,13 +2,14 @@ import { useState } from "react";
 import styled from "styled-components";
 import DropDownIcon from "../../assets/dropdown2.png";
 
-export default function SelectCategory() {
+export default function SelectCategory({ onSelect }) {
   const [isShowOption, setShowOptions] = useState(false);
   const [currentValue, setCurrentValue] = useState("카테고리 선택");
 
   const handleSelectValue = (e) => {
     const { innerText } = e.target;
     setCurrentValue(innerText);
+    onSelect(innerText);
   };
 
   return (

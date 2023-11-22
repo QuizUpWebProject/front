@@ -19,6 +19,7 @@ import {
   StudyWork,
   StudyWorkAnswer,
   User,
+  WorkMake,
 } from "../pages";
 import Header from "./Header";
 
@@ -33,6 +34,7 @@ const Router = () => {
         <Route path="/joinform" element={<JoinFormP />} />
         <Route path="/joinend" element={<JoinEnd />} />
         <Route path="/:userid" element={<User />} />
+        <Route path="/workmake" element={<WorkMake />} />
         <Route path="/front" element={<FrontMain />} />
         <Route path="/front/:worklistid" element={<FrontWorkList />} />
         <Route path="/front/:worklistid/:workid" element={<FrontWork />} />

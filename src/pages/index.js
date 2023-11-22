@@ -1,5 +1,6 @@
 import Main from "./Main";
 import User from "./User";
+import WorkMake from "./WorkMake";
 
 import Login from "./Login";
 import JoinFormP from "./JoinFormP";
@@ -24,6 +25,7 @@ import StudyWorkAnswer from "./StudyWorkAnswer";
 export {
   Main,
   User,
+  WorkMake,
   Login,
   JoinAgree,
   JoinFormP,
