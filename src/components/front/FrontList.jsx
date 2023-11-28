@@ -103,7 +103,7 @@ export default function FrontList() {
             onClick={() => setSortOption('highestRated')}
             active={sortOption === 'highestRated'}
           >
-            평점 높은순
+            추천순
           </SortButton>
           <SortButton
             onClick={() => setSortOption('mostCommented')}
