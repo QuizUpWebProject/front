@@ -1,16 +1,16 @@
 import { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 import useModal from "../../hooks/useModal";
 
 export default function EmailCheck({ email, setEmail }) {
   const { openModal, Modal, closeModal } = useModal();
 
   // 아이디 중복 확인
-  //const [email, setEmail] = useState("");
   const emailRegex = /^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}$/;
   const [isValid, setIsValid] = useState(true); // 유효성 검사
 
-  const handleCheckEmail = () => {
+  const handleCheckEmail = async () => {
     const checkedEmail = emailRegex.test(email); // 유효성 검사한 email
 
     setIsValid(checkedEmail);
@@ -20,7 +20,25 @@ export default function EmailCheck({ email, setEmail }) {
       openModal();
     } else {
       // 중복 확인 후 맞으면? 우선 alert 생성
-      alert("확인되었습니다.");
+      try {
+        const response = await axios.post("/joinform/api/signup/mailcheck", {
+          email: email,
+        });
+
+        const data = response.data;
+
+        if (response.status === 200) {
+          if (data.code === 200) {
+            alert("이메일이 사용 가능합니다.");
+          } else {
+            alert("중복된 이메일입니다.");
+          }
+        } else {
+          console.error(data.message);
+        }
+      } catch (error) {
+        console.error("Error during email check:", error);
+      }
     }
   };
 
