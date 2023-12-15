@@ -61,7 +61,7 @@ export default function JoinForm() {
             color: isValid ? "#939393" : "#ff0000",
           }}
         >
-          영문,숫자,특수문자 중 2가지 이상의 문자조합 8-13자로 입력해주세요.
+          영문,숫자,특수문자를 포함하여 8-13자로 입력해주세요.
         </Text>
         <Input
           type="password"
