@@ -5,6 +5,7 @@ import EmailCheck from "./EmailCheck";
 import NicknameCheck from "./NicknameCheck";
 import useModal from "../../hooks/useModal";
 import PasswordForm from "./PasswordForm";
+import axios from "axios";
 
 export default function JoinForm() {
   const navigate = useNavigate();
@@ -35,11 +36,26 @@ export default function JoinForm() {
     }
   };
 
-  const handleJoinBtn = () => {
+  // 회원가입 완료
+  const handleJoinBtn = async () => {
     if (isAnyFieldEmpty) {
       openModal();
     } else {
-      navigate("/joinend");
+      try {
+        const response = await axios.post(`/joinform/api/signup`, {
+          usermail: email,
+          password: password,
+          nickname: nickname,
+        });
+
+        if (response.status === 200 && response.data.code === 200) {
+          navigate("/joinend");
+        } else {
+          console.error("signup error: ", response.data.message);
+        }
+      } catch (error) {
+        console.error("error message: ", error);
+      }
     }
   };
 
