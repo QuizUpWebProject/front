@@ -35,7 +35,7 @@ export default function StudyList({ data }) {
   // 상태 변수: 현재 선택된 유형
   const [selectedType, setSelectedType] = useState("전체");
   // 추천/조회 선택
-  const [selectOption, setSelectOption] = useState("조회순");
+  const [selectOption, setSelectOption] = useState("인기순");
 
   const itemsPerPage = 15; // 페이지 당 보여줄 아이템 수
   const {
