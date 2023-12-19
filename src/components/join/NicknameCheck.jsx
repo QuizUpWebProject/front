@@ -1,26 +1,37 @@
 import { useState } from "react";
 import styled from "styled-components";
 import useModal from "../../hooks/useModal";
+import axios from "axios";
 
 export default function NicknameCheck({ nickname, setNickname }) {
   const { openModal, Modal, closeModal } = useModal();
 
   // 아이디 중복 확인
-  //const [nickname, setNickname] = useState("");
   const nicknameRegex = /^[a-zA-Z0-9]{1,5}$/;
   const [isValid, setIsValid] = useState(true); // 유효성 검사
 
-  const handleNickname = () => {
+  const handleNickname = async () => {
     const checkedNickname = nicknameRegex.test(nickname); // 유효성 검사한 닉네임
 
     setIsValid(checkedNickname);
 
     if (!nicknameRegex.test(nickname)) {
-      // 중복 확인 관련 기능 추가 예정
       openModal();
     } else {
-      // 중복 확인 후 맞으면? 우선 alert 생성
-      alert("확인되었습니다.");
+      try {
+        const response = await axios.get(`/joinform/api/signup/nicknamecheck`, {
+          params: { nickname: nickname },
+        });
+
+        if (response.status === 200) {
+          alert("확인되었습니다.");
+        } else if (response.status === 400) {
+          openModal();
+        }
+      } catch (error) {
+        console.error("Error checking nickname:", error);
+        openModal();
+      }
     }
   };
 
@@ -52,7 +63,9 @@ export default function NicknameCheck({ nickname, setNickname }) {
         <ModalContent>
           <div>
             <ModalBody>
-              닉네임이 중복됩니다. 다른 닉네임을 입력해주세요.
+              {isValid
+                ? "닉네임이 중복됩니다. 다른 닉네임을 입력해주세요."
+                : "잘못된 형식의 닉네임입니다."}
             </ModalBody>
           </div>
           <ModalButton onClick={closeModal}>확인</ModalButton>
