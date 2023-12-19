@@ -2,20 +2,41 @@ import styled from "styled-components";
 import CheckIcon from "../../assets/check_icon.png";
 import CheckedIcon from "../../assets/check_ed_icon.png";
 import { useState } from "react";
+import axios from "axios";
 
 export default function LoginForm() {
   const [isChecked, setIsChecked] = useState(false); // 로그인 유지하기 버튼 클릭 상태관리
   const [isError, setIsError] = useState(false); // 에러 상태 관리
+  const [usermail, setUsermail] = useState("");
+  const [password, setPassword] = useState("");
 
   // 로그인 유지하기 기능 구현 필요
   const handleCheckClick = () => {
     setIsChecked(!isChecked);
   };
 
-  // 로그인 버튼 클릭 시 기능 구현 예정
-  const handleLoginClick = () => {
-    // 아이디, 비밀번호 일치하지 않을 떄 error message 구현
-    setIsError(true);
+  // 로그인 버튼 클릭
+  const handleLoginClick = async () => {
+    try {
+      const response = await axios.post("/login/api/login", {
+        usermail: usermail,
+        password: password,
+      });
+
+      if (response.status === 200 && response.data.code === 200) {
+        console.log("login success");
+      } else if (response.status === 400 && response.data.code === 400) {
+        setIsError(true);
+        console.error("user가 없습니다", response.data.message);
+      } else if (response.status === 400 && response.data.code === 400) {
+        setIsError(true);
+        console.error("비밀번호가 일치하지 않습니다", response.data.message);
+      } else {
+        console.error("로그인 실패" < response.data.message);
+      }
+    } catch (error) {
+      console.error("error message: ", error);
+    }
   };
 
   return (
