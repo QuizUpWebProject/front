@@ -1,44 +1,36 @@
 import { useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import useModal from "../../hooks/useModal";
+import axios from "axios";
 
 export default function EmailCheck({ email, setEmail }) {
   const { openModal, Modal, closeModal } = useModal();
 
-  // 아이디 중복 확인
-  const emailRegex = /^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}$/;
+  const emailRegex = /^[_\-@./]*$/; // 이메일 조건
   const [isValid, setIsValid] = useState(true); // 유효성 검사
+  const [isDuplicate, setIsDuplicate] = useState(false); // 중복 검사
 
   const handleCheckEmail = async () => {
-    const checkedEmail = emailRegex.test(email); // 유효성 검사한 email
+    const isValidCheck = emailRegex.test(email);
+    setIsValid(isValidCheck);
 
-    setIsValid(checkedEmail);
+    if (!isValidCheck) return;
 
-    if (!emailRegex.test(email)) {
-      // 중복 확인 관련 기능 추가 예정
-      openModal();
-    } else {
-      // 중복 확인 후 맞으면? 우선 alert 생성
-      try {
-        const response = await axios.post("/joinform/api/signup/mailcheck", {
-          email: email,
-        });
+    try {
+      const response = await axios.post("/joinform/api/signup/mailcheck", {
+        email: email,
+      });
 
-        const data = response.data;
-
-        if (response.status === 200) {
-          if (data.code === 200) {
-            alert("이메일이 사용 가능합니다.");
-          } else {
-            alert("중복된 이메일입니다.");
-          }
-        } else {
-          console.error(data.message);
-        }
-      } catch (error) {
-        console.error("Error during email check:", error);
+      if (response.status === 200 && response.data.code === 200) {
+        // 중복 x
+        setIsDuplicate(false);
+      } else {
+        // 중복 o
+        setIsDuplicate(true);
+        openModal();
       }
+    } catch (error) {
+      console.error("error message: ", error);
     }
   };
 
@@ -52,7 +44,11 @@ export default function EmailCheck({ email, setEmail }) {
           <SInput
             placeholder="이메일을 입력해주세요."
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setIsValid(true);
+              setIsDuplicate(false);
+            }}
           />
           <CheckBtn onClick={handleCheckEmail}>중복 확인</CheckBtn>
         </div>
