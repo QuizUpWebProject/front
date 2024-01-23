@@ -28,21 +28,6 @@ export default function WorkList() {
     {id: 2, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-14", view: 2},
     {id: 3, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-13", view: 0},
     {id: 4, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-12", view: 1},
-    {id: 5, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-11", view: 15},
-    {id: 6, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-10", view: 12},
-    {id: 7, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-09", view: 11},
-    {id: 8, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-08", view: 9},
-    {id: 9, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-07", view: 19},
-    {id: 10, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-06", view: 30},
-    {id: 11, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-05", view: 5},
-    {id: 12, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-04", view: 6},
-    {id: 13, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-03", view: 0},
-    {id: 14, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-02", view: 11},
-    {id: 15, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-01", view: 10},
-    {id: 16, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-09-30", view: 10},
-    {id: 17, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-09-29", view: 10},
-    {id: 18, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-09-28", view: 10},
-    {id: 19, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-09-27", view: 10},
   ];
   const [sortOption, setSortOption] = useState('latest'); // 초기 정렬 기준 : 최신순
   const [data, setData] = useState(frontWorkData); // 데이터 상태 정의
@@ -111,11 +96,13 @@ export default function WorkList() {
       </Container>
 
       {/* 필터링된 스터디 리스트 표시 */}
-      <div>
-        {/* 현재 페이지의 아이템 렌더링 */}
-        {currentItems.map((front, index) => (
-          <FrontItem key={front.id} item={front} index={index}/>
-        ))}
+      <table>
+        <tbody>
+          {/* 현재 페이지의 아이템 렌더링 */}
+          {currentItems.map((front, index) => (
+            <FrontItem key={front.id} item={front} index={index}/>
+          ))}
+        </tbody>
 
         {/* 페이지네이션 컴포넌트 렌더링 */}
         <PaginationContainer>
@@ -135,7 +122,7 @@ export default function WorkList() {
               <img src={RightIcon} alt="right" />
             </PaginationButton>
         </PaginationContainer>
-      </div>
+      </table>
     </div>
   );
 };
