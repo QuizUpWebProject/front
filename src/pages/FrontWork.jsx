@@ -99,7 +99,7 @@ const ABox = styled.div`
 const ATextArea = styled.textarea`
   flex: 1;
   width: 958px;
-  height: 95px;
+  height: 90px;
   margin-right: 5px;
   margin-left: 10px;
   background-color: #8f8f8f;
