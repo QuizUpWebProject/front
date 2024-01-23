@@ -27,6 +27,7 @@ const SearchInputWrapper = styled.div`
   align-items: center;
   background-color: #3f424e;
   padding: 5px;
+  border-radius: 0 6px 6px 0;
 `;
 
 const SearchInput = styled.input`
