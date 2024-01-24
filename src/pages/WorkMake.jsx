@@ -54,17 +54,20 @@ const WorkMake = () => {
           />
         </Container>
         <Container>
-          <Labe1>
-            문제집 제목<span>*</span>
-          </Labe1>
+          <WorkTitle>
+            <Labe1>
+              문제집 제목<span>*</span>
+            </Labe1>
+            <Description>문제집 제목은 한번 입력한 경우 추후 수정이 불가능합니다. 신중히 생각 후 입력해주세요 :)</Description>
+          </WorkTitle>
+
           <NameInput
             placeholder="특수문자 포함 20자 이내로 작성해주세요."
             value={workName}
             onChange={handleWorkName}
           />
           <NameText>
-            사용 가능한 특수문자는 (_/-/@/.)입니다. <br/>
-            문제집 제목은 한번 입력한 경우 추후 수정이 불가능합니다. 신중히 생각 후 입력해주세요 :)
+            사용 가능한 특수문자는 (_/-/@/.)입니다.
           </NameText>
         </Container>
       </div>
@@ -113,6 +116,17 @@ const PageInfo = styled.div`
 
 const Container = styled.div`
   margin-bottom: 50px;
+`;
+
+const WorkTitle = styled.div`
+  display: flex;
+  align-items: baseline;
+`;
+
+const Description = styled.span`
+  font-size: 13px;
+  color: #939393;
+  margin-left: 10px;
 `;
 
 const Labe1 = styled.div`
