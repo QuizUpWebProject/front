@@ -1,26 +1,35 @@
 import { useState } from "react";
 import styled from "styled-components";
 import useModal from "../../hooks/useModal";
+import axios from "axios";
 
 export default function EmailCheck({ email, setEmail }) {
   const { openModal, Modal, closeModal } = useModal();
 
-  // 아이디 중복 확인
-  //const [email, setEmail] = useState("");
-  const emailRegex = /^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}$/;
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/; // 이메일 조건
   const [isValid, setIsValid] = useState(true); // 유효성 검사
 
-  const handleCheckEmail = () => {
-    const checkedEmail = emailRegex.test(email); // 유효성 검사한 email
-
-    setIsValid(checkedEmail);
+  const handleCheckEmail = async () => {
+    const isValidCheck = emailRegex.test(email);
+    setIsValid(isValidCheck);
 
     if (!emailRegex.test(email)) {
-      // 중복 확인 관련 기능 추가 예정
       openModal();
     } else {
-      // 중복 확인 후 맞으면? 우선 alert 생성
-      alert("확인되었습니다.");
+      try {
+        const response = await axios.get(`/joinform/api/signup/mailcheck`, {
+          params: { email: email },
+        });
+
+        if (response.status === 200) {
+          alert("확인되었습니다.");
+        } else if (response.status === 400) {
+          openModal();
+        }
+      } catch (error) {
+        console.error("Error checking email:", error);
+        openModal();
+      }
     }
   };
 
@@ -34,7 +43,9 @@ export default function EmailCheck({ email, setEmail }) {
           <SInput
             placeholder="이메일을 입력해주세요."
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
           />
           <CheckBtn onClick={handleCheckEmail}>중복 확인</CheckBtn>
         </div>
@@ -51,7 +62,11 @@ export default function EmailCheck({ email, setEmail }) {
       <Modal style={{ width: "400px", height: "220px" }}>
         <ModalContent>
           <div>
-            <ModalBody>이메일 형식이 올바르지 않습니다.</ModalBody>
+            <ModalBody>
+              {isValid
+                ? "중복된 이메일이 존재합니다. 다른 이메일을 입력해주세요."
+                : "이메일 형식이 올바르지 않습니다."}
+            </ModalBody>
           </div>
           <ModalButton onClick={closeModal}>확인</ModalButton>
         </ModalContent>

@@ -27,12 +27,12 @@ const TitleContent = styled.div`
   position: relative;
   align-items: flex-start;
   height: 60px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 `;
 
 const Title = styled.div`
-  front-size: 20px;
-  front-weight: bold;
+  font-size: 20px;
+  font-weight: 600;
   position: sticky;
   top: 0;
 `;

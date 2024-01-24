@@ -28,20 +28,6 @@ export default function FrontList() {
     {id: 3, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-13", user: "소밍밍", like: 0, cmt: 5},
     {id: 4, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-12", user: "소밍밍", like: 1, cmt: 10},
     {id: 5, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-11", user: "소밍밍", like: 15, cmt: 11},
-    {id: 6, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-10", user: "소밍밍", like: 12, cmt: 14},
-    {id: 7, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-09", user: "소밍밍", like: 11, cmt: 18},
-    {id: 8, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-08", user: "소밍밍", like: 9, cmt: 31},
-    {id: 9, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-07", user: "소밍밍", like: 19, cmt: 11},
-    {id: 10, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-06", user: "소밍밍", like: 30, cmt: 10},
-    {id: 11, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-05", user: "소밍밍", like: 5, cmt: 9},
-    {id: 12, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-04", user: "소밍밍", like: 6, cmt: 8},
-    {id: 13, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-03", user: "소밍밍", like: 0, cmt: 0},
-    {id: 14, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-02", user: "소밍밍", like: 11, cmt: 1},
-    {id: 15, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-01", user: "소밍밍", like: 10, cmt: 3},
-    {id: 16, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-09-30", user: "소밍밍", like: 10, cmt: 5},
-    {id: 17, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-09-29", user: "소밍밍", like: 10, cmt: 15},
-    {id: 18, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-09-28", user: "소밍밍", like: 10, cmt: 50},
-    {id: 19, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-09-27", user: "소밍밍", like: 10, cmt: 11},
   ];
   const [sortOption, setSortOption] = useState('latest'); // 초기 정렬 기준 : 최신순
   const [data, setData] = useState(frontData); // 데이터 상태 정의
@@ -103,7 +89,7 @@ export default function FrontList() {
             onClick={() => setSortOption('highestRated')}
             active={sortOption === 'highestRated'}
           >
-            평점 높은순
+            추천순
           </SortButton>
           <SortButton
             onClick={() => setSortOption('mostCommented')}
@@ -117,11 +103,13 @@ export default function FrontList() {
       </Container>
 
       {/* 필터링된 프론트 문제집 리스트 표시 */}
-      <div>
-        {/* 현재 페이지의 아이템 렌더링 */}
-        {currentItems.map((front, index) => (
-          <FrontItem key={front.id} item={front} index={index}/>
-        ))}
+      <table>
+        <tbody>
+          {/* 현재 페이지의 아이템 렌더링 */}
+          {currentItems.map((front, index) => (
+            <FrontItem key={front.id} item={front} index={index}/>
+          ))}
+        </tbody>
 
         {/* 페이지네이션 컴포넌트 렌더링 */}
         <PaginationContainer>
@@ -141,7 +129,7 @@ export default function FrontList() {
               <img src={RightIcon} alt="right" />
             </PaginationButton>
         </PaginationContainer>
-      </div>
+      </table>
     </div>
   );
 };

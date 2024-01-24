@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import CommentItem from "./CommentItem";
 import CommentBox from "./CommentBox";
+import usePagination from "../../hooks/usePagination";
+import LeftIcon from "../../assets/left.png";
+import RightIcon from "../../assets/right.png";
 
 function isEqual(arr1, arr2) {
   if (arr1.length !== arr2.length) {
@@ -27,8 +30,21 @@ export default function CommentList() {
   ];
 
   const [data, setData] = useState(commentData);
-  const [showMore, setShowMore] = useState(false);  // 답안 댓글 토글
   const [sortOption, setSortOption] = useState('latest'); // 초기 정렬 기준 : 최신순
+  
+  const itemsPerPage = 5; // 페이지 당 보여줄 아이템 수
+  const {
+    currentPage,
+    currentItems,
+    totalPages,
+    paginate,
+    goToPrevPage,
+    goToNextPage,
+  } = usePagination(
+    data,
+    itemsPerPage
+  );
+
 
   useEffect(() => {
     // 댓글 정렬
@@ -52,11 +68,6 @@ export default function CommentList() {
       setData(sortedData);
     }
   }, [sortOption, data]);
-  
-  const visibleBtn= data.length > 3; // 댓글이 3개 이상일 때만 버튼이 보임
-  const toggleShowMore = () => {
-    setShowMore(!showMore);
-  }
 
   return(
     <div>
@@ -83,14 +94,30 @@ export default function CommentList() {
         </SortButton>
       </SortOptions>
 
-      {data.slice(0, showMore ? data.length : 3).map((comment, index) => (
-        <CommentItem key={index} item={comment} />
-      ))}
-      {visibleBtn && (
-        <ShowMoreBtn onClick={toggleShowMore}>
-          {showMore ? "댓글 숨기기" : "댓글 더보기"}
-        </ShowMoreBtn>
-      )}
+      <div>
+        {currentItems.map((comment, index) => (
+          <CommentItem key={index} item={comment} />
+        ))}
+
+          {/* 페이지네이션 컴포넌트 렌더링 */}
+          <PaginationContainer>
+            <PaginationButton onClick={goToPrevPage}>
+              <img src={LeftIcon} alt="left" />
+            </PaginationButton>
+            {Array.from({ length: totalPages }).map((_, index) => (
+              <PageButton
+                key={index}
+                onClick={() => paginate(index + 1)}
+                isSelected={index + 1 === currentPage}
+              >
+                {index + 1}
+              </PageButton>
+            ))}
+            <PaginationButton onClick={goToNextPage}>
+              <img src={RightIcon} alt="right" />
+            </PaginationButton>
+        </PaginationContainer>
+      </div>
     </div>
   );
 };
@@ -111,15 +138,26 @@ const SortButton = styled.button`
   cursor: pointer;
 `;
 
-const ShowMoreBtn = styled.button`
-  width: 1090px;
-  height: 37px;
-  border: none;
-  border-radius: 6px;
-  background-color: #3f424e;
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 35px;
+const PaginationContainer = styled.div`
+  display: flex;
+  align-items: center;
   margin-top: 20px;
+  justify-content: center;
+  margin-bottom: 50px;
+`;
+
+const PaginationButton = styled.button`
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 0 5px;
+`;
+
+const PageButton = styled.button`
+  border: none;
+  margin: 10px;
+  background-color: transparent;
+  color: ${(props) => (props.isSelected ? "#5263ff" : "#838383")};
+  font-size: 15px;
 `;
