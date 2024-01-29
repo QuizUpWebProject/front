@@ -3,7 +3,7 @@ import styled from "styled-components";
 import StudyWorkItem from './StudyingWorkItem';
 
 export default function StudyWorkSlide() {
-  const studyworkItems = Array(5).fill(null);
+  const studyworkItems = Array(0).fill(null);
   const containerRef = useRef(null);
   const [startX, setStartX] = useState(null);
   const [isDrag, setIsDrag] = useState(false);
@@ -46,7 +46,7 @@ export default function StudyWorkSlide() {
 
   return (
     <div>
-      {studyworkItems && (
+      {studyworkItems && studyworkItems.length > 0 ?(
         <SlideContainer
           ref={containerRef}
           onMouseDown={onDragStart}
@@ -60,6 +60,11 @@ export default function StudyWorkSlide() {
             ))}
           </SlideItem>
         </SlideContainer>
+      ) : (
+        <NotStudy>
+          학습중인 문제집이 없네요. :(<br></br>
+          상단에 위치한 프론트엔드, 백엔드 메뉴를 통해 다른 회원들의 문제집을 학습하고 모범답안까지 확인해보세요.
+        </NotStudy>
       )}
     </div>
   );
@@ -74,4 +79,9 @@ const SlideContainer = styled.div`
 const SlideItem= styled.div`
   display: flex;
   gap: 30px;
+`;
+
+const NotStudy = styled.div`
+ line-height: 29px;
+ margin-top: 10px;
 `;

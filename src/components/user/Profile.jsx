@@ -1,25 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import avatarMan from "../../assets/avatar_man.png";
-import avatarWoman from "../../assets/avatar_woman.png";
+import Avatar from "../../assets/avatar.png";
 import BtnLogout from "../../assets/Btn_logout.png";
 import EditModal from './EditModal';
 
 const Profile = () => {
-  const [isImg, setIsImg] = useState(true);
-
-  // 유저 이미지 전환
-  const toggleImg = () => {
-    setIsImg(!isImg);
-  };
-
   return (
     <Wrapper>
       <Img 
-        src={isImg ? avatarWoman : avatarMan}
+        src={Avatar}
         alt="userImage"
-        onClick={toggleImg} 
         width={85}/>
       <Info>
         <TopContent>
@@ -49,7 +40,6 @@ const Info = styled.div`
 `;
 
 const Img = styled.img`
-  cursor: pointer;
   margin-right: 26px;
 `;
 

@@ -1,8 +1,20 @@
 import styled from "styled-components";
 import UserIcon from "../../assets/people.png";
 import LikeIcon from "../../assets/heart.png";
+import useModal from "../../hooks/useModal";
 
 const CommentItem = ({ item }) => {
+    const { openModal,closeModal, Modal } = useModal();
+
+    // open modal
+    const handleModal = () => {
+      openModal();
+    };
+
+    const handlerButton = () => {
+        closeModal();
+      };
+
     return (
         <Wrapper>
             <Name>
@@ -12,8 +24,18 @@ const CommentItem = ({ item }) => {
             <Container>
                 <Date>{item.date}</Date>
                 <Like>
-                    <Icon src={LikeIcon} alt="추천" /> {item.like}
+                    <Icon src={LikeIcon} alt="추천" onClick={handleModal}/> {item.like}
                 </Like>
+
+                {/* modal */}
+                <Modal style={{ width: "400px", height: "220px" }}>
+                    <ModalContent>
+                        <ModalBody>
+                        본인의 댓글을 추천 할 수 없습니다.
+                        </ModalBody>
+                        <Button onClick={handlerButton}>확인</Button>
+                    </ModalContent>
+                </Modal>
             </Container>
         </Wrapper>
     );
@@ -50,6 +72,7 @@ const Like = styled.div`
     background-color: #3F424E;
     border-radius: 6px;
     padding: 8px;
+    cursor: pointer;
 `;
 
 const Icon = styled.img`
@@ -59,6 +82,35 @@ const Icon = styled.img`
 const Container = styled.div`
     display: flex;
     justify-content: space-between;
+`;
+
+const ModalContent = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  margin-top: 60px;
+  font-size: 14px;
+  text-align: center;
+`;
+
+const ModalBody = styled.div`
+  margin-bottom: 20px;
+  color: #c7c7c7;
+  text-align: center;
+  margin-bottom: 30px;
+`;
+
+const Button = styled.button`
+  width: 301px;
+  height: 37px;
+  background-color: #5263ff;
+  font-size: 14px;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  margin-top: 20px;
 `;
 
 export default CommentItem;

@@ -10,24 +10,24 @@ function formatNumber(num) {
 const FrontWorkItem = ({ item, index}) => {
   return (
     <Container>
-      <div>{formatNumber(index+1)}</div>
-      <div>{item.title}</div>
-      <div>{item.date}</div>
-      <div>
+      <Td>{formatNumber(index+1)}</Td>
+      <Td>{item.title}</Td>
+      <Td>{item.date}</Td>
+      <Td>
         <IconTextWrapper>
           <Icon src={ViewIcon} alt="조회수" />{formatNumber(item.view)}
         </IconTextWrapper>
-      </div>
-      <div>
+      </Td>
+      <Td>
         <Link to='/front/:worklistid/:workid'>
           <img src={StartBtn} alt="학습하기"/>
         </Link>
-      </div>
+      </Td>
     </Container>
   );
 };
 
-const Container = styled.div`
+const Container = styled.tr`
   display: flex;
   position: relative;
   justify-content: space-between;
@@ -51,5 +51,9 @@ const IconTextWrapper = styled.div`
 const Icon = styled.img`
   padding: 0 5px;
 `;
+
+const Td = styled.td`
+  padding: 0 10px;
+`
 
 export default FrontWorkItem;

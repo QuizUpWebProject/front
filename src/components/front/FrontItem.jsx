@@ -12,34 +12,34 @@ function formatNumber(num) {
 const FrontItem = ({ item, index}) => {
   return (
     <Container>
-      <div>{formatNumber(index+1)}</div>
-      <div>{item.title}</div>
-      <div>{item.date}</div>
-      <div>
+      <Td>{formatNumber(index+1)}</Td>
+      <Td>{item.title}</Td>
+      <Td>{item.date}</Td>
+      <Td>
         <IconTextWrapper>
           <Icon src={UserIcon} alt="작성자" />{item.user}
         </IconTextWrapper>
-      </div>
-      <div>
+      </Td>
+      <Td>
         <IconTextWrapper>
           <Icon src={LikeIcon} alt="추천" />{formatNumber(item.like)}
         </IconTextWrapper>
-      </div>
-      <div>
+      </Td>
+      <Td>
         <IconTextWrapper>
           <Icon src={CmtIcon} alt="댓글" />{formatNumber(item.cmt)}
         </IconTextWrapper>
-      </div>
-      <div>
+      </Td>
+      <Td>
         <Link to='/front/:worklistid'>
           <img src={StartBtn} alt="학습하기"/>
         </Link>
-      </div>
+      </Td>
     </Container>
   );
 };
 
-const Container = styled.div`
+const Container = styled.tr`
   display: flex;
   position: relative;
   justify-content: space-between;
@@ -54,6 +54,10 @@ const Container = styled.div`
     margin-top: -1px; /* 첫 번째 div는 마진을 설정하지 않습니다. */
   }
 `;
+
+const Td = styled.td`
+  padding: 0 10px;
+`
 
 const IconTextWrapper = styled.div`
   display: flex;
