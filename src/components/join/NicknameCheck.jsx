@@ -9,6 +9,7 @@ export default function NicknameCheck({ nickname, setNickname }) {
   // 아이디 중복 확인
   const nicknameRegex = /^[a-zA-Z0-9]{1,5}$/;
   const [isValid, setIsValid] = useState(true); // 유효성 검사
+  const [isDuplicate, setIsDuplicate] = useState(true); // 중복 검사
 
   const handleNickname = async () => {
     const checkedNickname = nicknameRegex.test(nickname); // 유효성 검사한 닉네임
@@ -17,21 +18,27 @@ export default function NicknameCheck({ nickname, setNickname }) {
 
     if (!nicknameRegex.test(nickname)) {
       openModal();
-    } else {
-      try {
-        const response = await axios.get(`/joinform/api/signup/nicknamecheck`, {
-          params: { nickname: nickname },
-        });
+    }
 
-        if (response.status === 200) {
-          alert("확인되었습니다.");
-        } else if (response.status === 400) {
-          openModal();
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_BASE_URL}/joinform/api/signup/nicknamecheck`,
+        {
+          params: { nickname: nickname },
         }
-      } catch (error) {
-        console.error("Error checking nickname:", error);
+      );
+
+      if (response.status === 200) {
+        // 중복 닉네임 없을 때
+        setIsDuplicate(true);
+        openModal();
+      } else if (response.status === 400) {
+        // 중복 닉네임 있을 때
+        setIsDuplicate(false);
         openModal();
       }
+    } catch (error) {
+      console.error("error: ", error);
     }
   };
 
@@ -39,11 +46,11 @@ export default function NicknameCheck({ nickname, setNickname }) {
     <>
       <Container>
         <Label>
-          아이디<span>*</span>
+          닉네임<span>*</span>
         </Label>
         <div>
           <SInput
-            placeholder="이메일을 입력해주세요."
+            placeholder="사용하실 닉네임을 입력해주세요."
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
           />
@@ -58,13 +65,15 @@ export default function NicknameCheck({ nickname, setNickname }) {
         </Text>
       </Container>
 
-      {/* 아이디 중복 확인 modal */}
+      {/* 닉네임 중복 확인 modal */}
       <Modal style={{ width: "400px", height: "220px" }}>
         <ModalContent>
           <div>
             <ModalBody>
               {isValid
-                ? "닉네임이 중복됩니다. 다른 닉네임을 입력해주세요."
+                ? isDuplicate
+                  ? "확인되었습니다"
+                  : "닉네임이 중복됩니다. 다른 닉네임을 입력해주세요."
                 : "잘못된 형식의 닉네임입니다."}
             </ModalBody>
           </div>

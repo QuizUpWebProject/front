@@ -42,11 +42,14 @@ export default function JoinForm() {
       openModal();
     } else {
       try {
-        const response = await axios.post(`/joinform/api/signup`, {
-          usermail: email,
-          password: password,
-          nickname: nickname,
-        });
+        const response = await axios.post(
+          `${process.env.REACT_APP_API_BASE_URL}/joinform/api/signup`,
+          {
+            usermail: email,
+            password: password,
+            nickname: nickname,
+          }
+        );
 
         if (response.status === 200 && response.data.code === 200) {
           navigate("/joinend");

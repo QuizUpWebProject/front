@@ -8,28 +8,38 @@ export default function EmailCheck({ email, setEmail }) {
 
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/; // 이메일 조건
   const [isValid, setIsValid] = useState(true); // 유효성 검사
+  const [isDuplicate, setIsDuplicate] = useState(true); // 중복 검사
 
   const handleCheckEmail = async () => {
     const isValidCheck = emailRegex.test(email);
-    setIsValid(isValidCheck);
+    setIsValid(isValidCheck); // 유효성 검사 통과
 
     if (!emailRegex.test(email)) {
       openModal();
-    } else {
-      try {
-        const response = await axios.get(`/joinform/api/signup/mailcheck`, {
-          params: { email: email },
-        });
+      return;
+    }
 
-        if (response.status === 200) {
-          alert("확인되었습니다.");
-        } else if (response.status === 400) {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_BASE_URL}/joinform/api/signup/mailcheck`,
+        {
+          params: { mail: email },
+        }
+      );
+
+      if (response.status === 200) {
+        if (response.data.code === 200) {
+          // 중복 이메일 없을 때
+          setIsDuplicate(true);
+          openModal();
+        } else if (response.data.code === 400) {
+          // 중복 이메일이 존재할 때
+          setIsDuplicate(false);
           openModal();
         }
-      } catch (error) {
-        console.error("Error checking email:", error);
-        openModal();
       }
+    } catch (error) {
+      console.error("error: ", error);
     }
   };
 
@@ -64,7 +74,9 @@ export default function EmailCheck({ email, setEmail }) {
           <div>
             <ModalBody>
               {isValid
-                ? "중복된 이메일이 존재합니다. 다른 이메일을 입력해주세요."
+                ? isDuplicate
+                  ? "확인되었습니다"
+                  : "중복된 이메일이 존재합니다"
                 : "이메일 형식이 올바르지 않습니다."}
             </ModalBody>
           </div>
