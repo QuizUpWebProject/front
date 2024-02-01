@@ -4,12 +4,14 @@ import DropDown from "../../assets/dropdown2.png";
 
 export default function SelectList({ selectedOption, onChange }) {
   const [isShowOption, setShowOptions] = useState(false);
-  const [currentValue, setCurrentValue] = useState("조회순");
+  const [currentValue, setCurrentValue] = useState("인기순");
 
   const handleSelectValue = (e) => {
     const { innerText } = e.target;
     setCurrentValue(innerText);
   };
+
+  // 인기방(입장가능한) 기준 : 인원 초과로 입장 불가능한 스터디방 제외한 인기순
 
   return (
     <SelectContainer onClick={() => setShowOptions((prev) => !prev)}>
@@ -22,11 +24,10 @@ export default function SelectList({ selectedOption, onChange }) {
         value={selectedOption}
         onChange={onChange}
       >
-        <Option onClick={handleSelectValue}>조회순</Option>
+        <Option onClick={handleSelectValue}>인기순</Option>
+        <Option onClick={handleSelectValue}>인기순(입장가능한)</Option>
         <Option onClick={handleSelectValue}>공개방</Option>
         <Option onClick={handleSelectValue}>비공개방</Option>
-        <Option onClick={handleSelectValue}>인원 많은순</Option>
-        <Option onClick={handleSelectValue}>인원 적은순</Option>
       </SelectOptions>
     </SelectContainer>
   );

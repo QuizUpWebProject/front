@@ -33,7 +33,7 @@ const Router = () => {
         <Route path="/joinagree" element={<JoinAgree />} />
         <Route path="/joinform" element={<JoinFormP />} />
         <Route path="/joinend" element={<JoinEnd />} />
-        <Route path="/:userid" element={<User />} />
+        <Route path="/:userEmail" element={<User />} />
         <Route path="/workmake" element={<WorkMake />} />
         <Route path="/front" element={<FrontMain />} />
         <Route path="/front/:worklistid" element={<FrontWorkList />} />
