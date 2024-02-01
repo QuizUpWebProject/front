@@ -5,32 +5,35 @@ import SearchBar from "./SearchBar";
 import usePagination from "../../hooks/usePagination";
 import LeftIcon from "../../assets/left.png";
 import RightIcon from "../../assets/right.png";
+import axios from 'axios';
 
-function isEqual(arr1, arr2) {
-  if (arr1.length !== arr2.length) {
-    return false;
-  }
+export default function FrontList({ standardEnum, handleSort }) {
+  const [data, setData] = useState([]); // 데이터 상태 정의
 
-  for (let i = 0; i < arr1.length; i++) {
-    if (arr1[i].id !== arr2[i].id) {
-      return false;
+  // API 호출 함수 정의
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_BASE_URL}/problem/api/getlist`, 
+        {
+        pageNumber: currentPage,
+        pageSize: itemsPerPage,
+        category: 'front',
+        standardEnum: standardEnum, // standardEnum 값 추가
+      });
+      setData(response.data);
+    } catch (error) {
+      console.error('Error:', error);
     }
-  }
+  };
 
-  return true;
-}
+  useEffect(() => {
+    fetchData();
+  }, [standardEnum]);
 
-export default function FrontList() {
-  // 임시 프론트 문제집 data 
-  const frontData = [
-    {id: 1, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-15", user: "소밍밍", like: 10, cmt: 5},
-    {id: 2, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-14", user: "소밍밍", like: 2, cmt: 5},
-    {id: 3, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-13", user: "소밍밍", like: 0, cmt: 5},
-    {id: 4, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-12", user: "소밍밍", like: 1, cmt: 10},
-    {id: 5, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-11", user: "소밍밍", like: 15, cmt: 11},
-  ];
-  const [sortOption, setSortOption] = useState('latest'); // 초기 정렬 기준 : 최신순
-  const [data, setData] = useState(frontData); // 데이터 상태 정의
+  const handleSortClick = (enumValue) => {
+    handleSort(enumValue);
+  };
 
   const itemsPerPage = 15; // 페이지 당 보여줄 아이템 수
   const {
@@ -45,56 +48,21 @@ export default function FrontList() {
     itemsPerPage
   );
 
-  useEffect(() => {
-    // 문제집 리스트 정렬
-    const sortData = (sortKey) => {
-      const sortedData = [...data]; // 원본 데이터를 변경하지 않기 위해 복사
-
-      if (sortKey === 'latest') {
-        sortedData.sort((a, b) => new Date(b.date) - new Date(a.date)); // 최신순
-      } else if (sortKey === 'oldest') {
-        sortedData.sort((a, b) => new Date(a.date) - new Date(b.date)); // 등록순
-      } else if (sortKey === 'highestRated') {
-        sortedData.sort((a, b) => b.like - a.like);                     // 평점 높은순
-      } else if (sortKey === 'mostCommented') {
-        sortedData.sort((a, b) => b.cmt - a.cmt);                       // 댓글순
-      }
-
-      return sortedData;
-    };
-    const sortedData = sortData(sortOption);
-    // 정렬된 데이터와 현재 데이터가 다를 경우에만 업데이트
-    if (!isEqual(sortedData, data)) {
-      setData(sortedData);
-    }
-  }, [sortOption, data]);
 
   return(
     <div>
       <Container>
         <SortOptions>
-          <SortButton
-            onClick={() => setSortOption('latest')}
-            active={sortOption === 'latest'}
-          >
+          <SortButton onClick={() => handleSortClick('LATEST')}>
             최신순
           </SortButton>
-          <SortButton
-            onClick={() => setSortOption('oldest')}
-            active={sortOption === 'oldest'}
-          >
+          <SortButton onClick={() => handleSortClick('OLDEST')}>
             등록순
           </SortButton>
-          <SortButton
-            onClick={() => setSortOption('highestRated')}
-            active={sortOption === 'highestRated'}
-          >
+          <SortButton onClick={() => handleSortClick('RECOMMEND')}>
             추천순
           </SortButton>
-          <SortButton
-            onClick={() => setSortOption('mostCommented')}
-            active={sortOption === 'mostCommented'}
-          >
+          <SortButton onClick={() => handleSortClick('VIEW')}>
             댓글순
           </SortButton>
         </SortOptions>
