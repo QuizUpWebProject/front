@@ -3,39 +3,44 @@ import CheckIcon from "../../assets/check_icon.png";
 import CheckedIcon from "../../assets/check_ed_icon.png";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 export default function LoginForm() {
   const [isChecked, setIsChecked] = useState(false); // 로그인 유지하기 버튼 클릭 상태관리
   const [isError, setIsError] = useState(false); // 에러 상태 관리
-  const [usermail, setUsermail] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
 
   // 로그인 유지하기 기능 구현 필요
   const handleCheckClick = () => {
     setIsChecked(!isChecked);
   };
 
-  // 로그인 버튼 클릭
+  // 로그인
   const handleLoginClick = async () => {
     try {
-      const response = await axios.post("/login/api/login", {
-        usermail: usermail,
-        password: password,
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_BASE_URL}/login/api/login`,
+        {
+          usermail: email,
+          password: password,
+        }
+      );
+      console.log("Response:", response);
 
       if (response.status === 200 && response.data.code === 200) {
-        console.log("login success");
+        // 로그인 성공
+        navigate("/");
       } else if (response.status === 400 && response.data.code === 400) {
+        // 로그인 실패
         setIsError(true);
-        console.error("user가 없습니다", response.data.message);
-      } else if (response.status === 400 && response.data.code === 400) {
-        setIsError(true);
-        console.error("비밀번호가 일치하지 않습니다", response.data.message);
       } else {
-        console.error("로그인 실패" < response.data.message);
+        console.error("unexpected reesponse: ", response);
       }
     } catch (error) {
-      console.error("error message: ", error);
+      console.error("error: ", error);
     }
   };
 
@@ -45,14 +50,23 @@ export default function LoginForm() {
         <Label>
           아이디<span>*</span>
         </Label>
-        <Input placeholder="이메일을 입력해주세요." />
+        <Input
+          placeholder="이메일을 입력해주세요."
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
       </IDContaner>
 
       <PWContainer>
         <Label>
           비밀번호<span>*</span>
         </Label>
-        <Input placeholder="비밀번호를 입력해주세요." />
+        <Input
+          placeholder="비밀번호를 입력해주세요."
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
       </PWContainer>
 
       <CheckContainer

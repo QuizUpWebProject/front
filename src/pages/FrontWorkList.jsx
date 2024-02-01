@@ -4,17 +4,25 @@ import { useState } from "react";
 import LikeIcon from "../assets/heart.png";
 import CmtIcon from "../assets/chat.png";
 import UserIcon from "../assets/people.png";
+import LikedBtn from "../assets/Btn_likeend.png";
 import LikeBtn from "../assets/Btn_like.png";
 import AllBtn from "../assets/Btn_all.png";
 import WorkList from "../components/frontWorkList/WorkList";
 import CommentList from "../components/frontWorkList/CommentList";
 
 const FrontWorkList = () => {
-    const [textValue, setTextValue] = useState(0);    // 추천수 올리기
+    const [likeCount, setLikeCount] = useState(0);    // 추천수
+    const [liked, setliked] = useState(false); 
 
-    const increaseLike = () => {
-      setTextValue(textValue + 1);
-    };
+    const toggleLike = () => {    // 한 번만 추천하도록 함
+      if(liked) {
+        setLikeCount(likeCount - 1);
+      } else {
+        setLikeCount(likeCount + 1);
+      }
+
+      setliked(!liked);
+    }
   
   return (
     <Wrapper>
@@ -30,7 +38,7 @@ const FrontWorkList = () => {
             </IconTextWrapper>
             <LikeCmt>
               <IconTextWrapper>
-                <Icon src={LikeIcon} alt="추천"></Icon>{textValue}
+                <Icon src={LikeIcon} alt="추천"></Icon>{likeCount}
               </IconTextWrapper>
               <IconTextWrapper>
                 <Icon src={CmtIcon} alt="댓글"></Icon>04
@@ -41,7 +49,12 @@ const FrontWorkList = () => {
             <Link to='/front/:worklistid/:workid'>
               <img src={AllBtn} alt="전체학습하기" />
             </Link>
-            <img src={LikeBtn} alt="추천하기" onClick={increaseLike} style={{cursor: 'pointer'}}/>
+            <img 
+             src={liked ? LikedBtn : LikeBtn} 
+             alt="추천하기" 
+             onClick={toggleLike} 
+             style={{cursor: 'pointer'}}
+            />
           </Buttons>
         </TopContent>
       </TopSection>
@@ -60,7 +73,7 @@ const Wrapper = styled.div`
 
 const TopSection = styled.div`
   padding: 20px 0;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 `;
 
 const TopTitle = styled.div`

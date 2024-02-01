@@ -3,7 +3,7 @@ import styled from "styled-components";
 import MyWorkItem from './MyWorkItem';
 
 export default function MyWorkSlide() {
-  const myworkItems = Array(5).fill(null);
+  const myworkItems = Array(0).fill(null);
   const containerRef = useRef(null);
   const [startX, setStartX] = useState(null);
   const [isDrag, setIsDrag] = useState(false);
@@ -46,7 +46,7 @@ export default function MyWorkSlide() {
 
   return (
     <div>
-      {myworkItems && (
+      {myworkItems && myworkItems.length > 0 ? (
         <SlideContainer
           ref={containerRef}
           onMouseDown={onDragStart}
@@ -60,6 +60,11 @@ export default function MyWorkSlide() {
             ))}
           </SlideItem>
         </SlideContainer>
+      ) : (
+        <NotWork>
+          CS면접 지식을 공유할 수 있는 나만의 문제집을 문제집 만들기를 통해 만들어 보세요.<br></br>
+          문제집에서 제작된 문제들과 답변들은 공개 형식으로 다른 회원들이 문제와 답안을 공유할 수 있습니다.
+        </NotWork>
       )}
     </div>
   );
@@ -74,4 +79,9 @@ const SlideContainer = styled.div`
 const SlideItem= styled.div`
   display: flex;
   gap: 30px;
+`;
+
+const NotWork = styled.div`
+ line-height: 29px;
+ margin-top: 10px;
 `;
