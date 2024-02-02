@@ -6,6 +6,8 @@ import MakeStudy from "../assets/Btn_mstudy.png";
 import SearchIcon from "../assets/search.png";
 
 const StudyMain = () => {
+  // 로그인한 user의 스터디 리스트 불러오기
+
   return (
     <Wrapper>
       <TopSection>
@@ -15,6 +17,7 @@ const StudyMain = () => {
         </ImageLink>
       </TopSection>
 
+      {/* 스터디 있을때 없을 때 구분 */}
       <MyStudyList>
         가입된 스터디방이 없네요! 지금 바로 스터디방에 가입하고 스터디원과
         답변을 공유해보세요.
