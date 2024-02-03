@@ -127,6 +127,7 @@ const Button = styled.button`
   cursor: pointer;
   white-space: nowrap;
   font-size: 16px;
+  z-index: 2;
 
   &:hover {
     color: white;
@@ -135,6 +136,7 @@ const Button = styled.button`
 
 const Popup = styled.div`
   position: absolute;
+  z-index: 2;
   top: 10px;
   right: 0;
   width: 439px;
