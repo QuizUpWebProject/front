@@ -27,6 +27,58 @@ const Alarm = () => {
   // 알람 기능 구현 후 수정 예정
   const notificationCount = 3;
 
+  // 알람 기능 구현 후 수정 예정 (더미데이터)
+  const notifications = [
+    {
+      id: 1,
+      message:
+        "삼성 SDS 수시채용 면접준비 채팅방에서 새로운 메세지가 도착했어요.",
+      time: "지금",
+    },
+    {
+      id: 2,
+      message:
+        "삼성 SDS 수시채용 면접준비 채팅방에서 새로운 메세지가 도착했어요.",
+      time: "2시간 전",
+    },
+    {
+      id: 3,
+      message:
+        "삼성 SDS 수시채용 면접준비 채팅방에서 새로운 메세지가 도착했어요.",
+      time: "21시간 전",
+    },
+    {
+      id: 4,
+      message:
+        "삼성 SDS 수시채용 면접준비 채팅방에서 새로운 메세지가 도착했어요.",
+      time: "1일 전",
+    },
+    {
+      id: 5,
+      message:
+        "삼성 SDS 수시채용 면접준비 채팅방에서 새로운 메세지가 도착했어요.",
+      time: "12월 31일",
+    },
+    {
+      id: 6,
+      message:
+        "삼성 SDS 수시채용 면접준비 채팅방에서 새로운 메세지가 도착했어요.",
+      time: "12월 31일",
+    },
+    {
+      id: 7,
+      message:
+        "삼성 SDS 수시채용 면접준비 채팅방에서 새로운 메세지가 도착했어요.",
+      time: "12월 29일",
+    },
+    {
+      id: 8,
+      message:
+        "삼성 SDS 수시채용 면접준비 채팅방에서 새로운 메세지가 도착했어요.",
+      time: "11월 1일",
+    },
+  ];
+
   return (
     <>
       <Button onClick={handleClick}>알림</Button>{" "}
@@ -41,16 +93,22 @@ const Alarm = () => {
           </PopHeader>
 
           {/* 알림 스크롤 부분 */}
-          <AlramScroll>
-            <AlarmContent>
-              <AlarmImage src={AlarmIcon} alt="alram-icon" />
-              <AlarmTextContainer>
-                삼성 SDS 수시채용 면접준비 채팅방에서 새로운 메세지가
-                도착했어요.
-              </AlarmTextContainer>
-              <AlarmTime>지금</AlarmTime>
-            </AlarmContent>
-          </AlramScroll>
+          <AlarmScroll>
+            {notifications.map((notification) => (
+              <AlarmContent
+                key={notification.id}
+                isNow={notification.time === "지금"}
+              >
+                <AlarmImage src={AlarmIcon} alt="alram-icon" />
+                <AlarmTextContainer isNow={notification.time === "지금"}>
+                  {notification.message}
+                </AlarmTextContainer>
+                <AlarmTime isNow={notification.time === "지금"}>
+                  {notification.time}
+                </AlarmTime>
+              </AlarmContent>
+            ))}
+          </AlarmScroll>
 
           {/* 모두 읽음 처리 */}
           <AllReadBtn>
@@ -134,18 +192,40 @@ const CloseBtn = styled.button`
   font-size: 25px;
 `;
 
-const AlramScroll = styled.div`
+const AlarmScroll = styled.div`
   overflow-y: auto;
+  overflow-x: hidden;
   flex-grow: 1;
+  width: 100%;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 173px;
+    margin-left: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #6d6c6c;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
 `;
 
 const AlarmContent = styled.div`
   display: flex;
   align-items: center;
-  width: 437px;
+  width: 100%;
   height: 77px;
-  margin: 18px 1px 21px;
-  background-color: rgba(185, 208, 255, 0.8);
+  background-color: ${(props) =>
+    props.isNow ? "rgba(185, 208, 255, 0.8)" : "#262626"};
+  box-sizing: border-box;
 `;
 
 const AlarmImage = styled.img`
@@ -160,17 +240,17 @@ const AlarmTextContainer = styled.div`
   margin-top: 18px;
   margin-bottom: 18px;
   font-size: 14px;
-  color: #000;
+  color: ${(props) => (props.isNow ? "#000" : "#bcbcbc")};
   text-align: left;
   font-weight: normal;
 `;
 
 const AlarmTime = styled.div`
-  width: 100px;
+  width: 80px;
   font-size: 14px;
   text-align: right;
-  color: #060606;
-  marign-right: 38px;
+  color: ${(props) => (props.isNow ? "#000" : "#bcbcbc")};
+  marign-right: 30px;
 `;
 
 const AllReadBtn = styled.button`
