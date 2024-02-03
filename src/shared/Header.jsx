@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../assets/fonts/font.css";
+import Alarm from "../components/alarm/Alarm";
 
 const Header = () => {
   const userEmail = sessionStorage.getItem("userEmail");
@@ -32,7 +33,7 @@ const Header = () => {
                 <NavLinkStyled to="/study">스터디방</NavLinkStyled>
               </NavItem>
               <NavItem isNotification>
-                <Button>알림</Button>
+                <Alarm />
               </NavItem>
               <NavItem>
                 <NavLinkStyled to={`/${userEmail}`}>마이페이지</NavLinkStyled>
@@ -123,14 +124,6 @@ const NavLinkStyled = styled(NavLink)`
   &.active {
     color: white;
   }
-`;
-const Button = styled.button`
-  border: none;
-  background-color: transparent;
-  color: #a4a4a4;
-  cursor: pointer;
-  white-space: nowrap;
-  font-size: 16px;
 `;
 
 export default Header;
