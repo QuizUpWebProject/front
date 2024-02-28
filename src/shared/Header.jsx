@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../assets/fonts/font.css";
 import Alarm from "../components/alarm/Alarm";
+import LogoImage from "../assets/logo.png";
 
 const Header = () => {
   const userEmail = sessionStorage.getItem("userEmail");
@@ -12,7 +13,9 @@ const Header = () => {
 
   return (
     <Wrapper>
-      <Logo onClick={() => navigate("/")}>Quiz up</Logo>
+      <Logo onClick={() => navigate("/")}>
+        <LogoImg src={LogoImage} alt="logo" />
+      </Logo>
 
       <NavContainer>
         <NavGroup>
@@ -42,10 +45,10 @@ const Header = () => {
           ) : (
             <>
               <NavItem>
-                <NavLinkStyled to="login">로그인</NavLinkStyled>
+                <NavLinkStyled to="/login">로그인</NavLinkStyled>
               </NavItem>
               <NavItem>
-                <NavLinkStyled to="register">회원가입</NavLinkStyled>
+                <NavLinkStyled to="/joinagree">회원가입</NavLinkStyled>
               </NavItem>
             </>
           )}
@@ -78,6 +81,12 @@ const Logo = styled.div`
   @media (max-width: 1765px) {
     position: static;
   }
+`;
+const LogoImg = styled.img`
+  width: 176px;
+  height: 84px;
+  margin: 0 88px 31px 151px;
+  object-fit: contain;
 `;
 const NavContainer = styled.nav`
   display: flex;
