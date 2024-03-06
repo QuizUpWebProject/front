@@ -30,11 +30,11 @@ const Header = () => {
           </NavItem>
         </NavGroup>
         <NavGroup>
+          <NavItem>
+            <NavLinkStyled to="/study">스터디방</NavLinkStyled>
+          </NavItem>
           {isLoggedIn ? (
             <>
-              <NavItem>
-                <NavLinkStyled to="/study">스터디방</NavLinkStyled>
-              </NavItem>
               <NavItem isNotification>
                 <Alarm />
               </NavItem>
