@@ -9,32 +9,7 @@ import axios from 'axios';
 
 export default function FrontList({ standardEnum, handleSort }) {
   const [data, setData] = useState([]); // 데이터 상태 정의
-
-  // API 호출 함수 정의
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/problem/api/getlist`, 
-        {
-        pageNumber: currentPage,
-        pageSize: itemsPerPage,
-        category: 'front',
-        standardEnum: standardEnum, // standardEnum 값 추가
-      });
-      setData(response.data);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [standardEnum]);
-
-  const handleSortClick = (enumValue) => {
-    handleSort(enumValue);
-  };
-
+  const [searchResults, setSearchResults] = useState([]); // 검색 결과
   const itemsPerPage = 15; // 페이지 당 보여줄 아이템 수
   const {
     currentPage,
@@ -48,26 +23,57 @@ export default function FrontList({ standardEnum, handleSort }) {
     itemsPerPage
   );
 
+  useEffect(() => {
+    // API 호출 함수 정의
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_BASE_URL}/problem/api/getlist`,
+          {
+            params: {
+              pageNumber: currentPage,
+              pageSize: itemsPerPage,
+              category: "front",
+              standardEnum: standardEnum
+            }
+          });
+
+        if (response.status === 200 && response.data.code === 200) {
+          setData(response.data.result);
+        } else {
+          console.error("frontlist error: ", response.data.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };  
+
+    fetchData();
+  }, [currentPage, itemsPerPage, standardEnum]);
+
+  const handleSearch = (results) => {
+    setSearchResults(results);
+  };
 
   return(
     <div>
       <Container>
         <SortOptions>
-          <SortButton onClick={() => handleSortClick('LATEST')}>
+          <SortButton isSelected={standardEnum === 'LATEST'} onClick={() => handleSort('LATEST')}>
             최신순
           </SortButton>
-          <SortButton onClick={() => handleSortClick('OLDEST')}>
+          <SortButton isSelected={standardEnum === 'OLDEST'} onClick={() => handleSort('OLDEST')}>
             등록순
           </SortButton>
-          <SortButton onClick={() => handleSortClick('RECOMMEND')}>
+          <SortButton isSelected={standardEnum === 'RECOMMEND'} onClick={() => handleSort('RECOMMEND')}>
             추천순
           </SortButton>
-          <SortButton onClick={() => handleSortClick('VIEW')}>
+          <SortButton isSelected={standardEnum === 'VIEW'} onClick={() => handleSort('VIEW')}>
             댓글순
           </SortButton>
         </SortOptions>
 
-        <SearchBar />
+        <SearchBar onSearch={handleSearch} />
       </Container>
 
       {/* 필터링된 프론트 문제집 리스트 표시 */}
@@ -75,7 +81,7 @@ export default function FrontList({ standardEnum, handleSort }) {
         <tbody>
           {/* 현재 페이지의 아이템 렌더링 */}
           {currentItems.map((front, index) => (
-            <FrontItem key={front.id} item={front} index={index}/>
+           <FrontItem key={front.id} item={front} index={index}/>
           ))}
         </tbody>
 
@@ -117,7 +123,7 @@ const SortOptions = styled.div`
 const SortButton = styled.button`
   margin-right: 15spx;
   background-color: transparent;
-  color: ${(props) => (props.active ? '#FFFFFF' : '#838383')};
+  color: ${(props) => (props.isSelected ? '#FFFFFF' : '#838383')};
   font-size: 16px;
   border: none;
   cursor: pointer;
