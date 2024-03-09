@@ -1,10 +1,13 @@
 import styled from "styled-components";
 import Banner from "../components/main/Banner";
+import Description from "../components/main/Description";
 
 const Main = () => {
   return (
     <Wrapper>
       <Banner />
+
+      <Description />
     </Wrapper>
   );
 };
