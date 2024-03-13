@@ -7,9 +7,12 @@ import OpenStudyIcon from "../../assets/open_study.png";
 import PrivateStudyIcon from "../../assets/private_study.png";
 import LockIcon from "../../assets/lock.png";
 import { useNavigate } from "react-router-dom";
+import useToolTip from "../../hooks/useTooltip";
 
 const Ranking = () => {
   const navigate = useNavigate();
+
+  const Tooltip = useToolTip("");
 
   return (
     <Wrapper>
@@ -31,6 +34,7 @@ const Ranking = () => {
               <div onClick={() => navigate("/front/:worklistid")}>
                 디자인패턴 문제집 모음집
               </div>
+              <Tooltip description="삼성CS 면접 대비 스터디방입니다. 일주일에 1개 이상의 면접 질문 공유하실 분만 들어와주세요~" />
             </Item>
             <Line />
             <Item>
@@ -38,6 +42,7 @@ const Ranking = () => {
               <div onClick={() => navigate("/back/:worklistid")}>
                 디자인패턴 문제집 모음집
               </div>
+              <Tooltip description="삼성CS 면접 대비 스터디방입니다. 일주일에 1개 이상의 면접 질문 공유하실 분만 들어와주세요~" />
             </Item>
             <Line />
             <Item>
@@ -45,6 +50,7 @@ const Ranking = () => {
               <div onClick={() => navigate("/back/:worklistid")}>
                 디자인패턴 문제집 모음집
               </div>
+              <Tooltip description="삼성CS 면접 대비 스터디방입니다. 일주일에 1개 이상의 면접 질문 공유하실 분만 들어와주세요~" />
             </Item>
             <Line />
             <Item>
@@ -52,6 +58,7 @@ const Ranking = () => {
               <div onClick={() => navigate("/front/:worklistid")}>
                 디자인패턴 문제집 모음집
               </div>
+              <Tooltip description="삼성CS 면접 대비 스터디방입니다. 일주일에 1개 이상의 면접 질문 공유하실 분만 들어와주세요~" />
             </Item>
             <Line />
             <Item>
@@ -59,6 +66,7 @@ const Ranking = () => {
               <div onClick={() => navigate("/front/:worklistid")}>
                 디자인패턴 문제집 모음집
               </div>
+              <Tooltip description="삼성CS 면접 대비 스터디방입니다. 일주일에 1개 이상의 면접 질문 공유하실 분만 들어와주세요~" />
             </Item>
           </ItemBody>
         </ItemWrapper>
@@ -74,6 +82,7 @@ const Ranking = () => {
               <div onClick={() => navigate("/study/:studyroomid")}>
                 싱글톤패턴 문제 완벽 대비
               </div>{" "}
+              <Tooltip description="삼성CS 면접 대비 스터디방입니다. 일주일에 1개 이상의 면접 질문 공유하실 분만 들어와주세요~" />
               <LockImg src={LockIcon} alt="lock" />
             </Item>
             <Line />
@@ -81,7 +90,8 @@ const Ranking = () => {
               <ItemImage src={OpenStudyIcon} alt="open-study" />
               <div onClick={() => navigate("/study/:studyroomid")}>
                 싱글톤패턴 문제 완벽 대비
-              </div>
+              </div>{" "}
+              <Tooltip description="삼성CS 면접 대비 스터디방입니다. 일주일에 1개 이상의 면접 질문 공유하실 분만 들어와주세요~" />
             </Item>
             <Line />
             <Item>
@@ -89,6 +99,7 @@ const Ranking = () => {
               <div onClick={() => navigate("/study/:studyroomid")}>
                 싱글톤패턴 문제 완벽 대비
               </div>{" "}
+              <Tooltip description="삼성CS 면접 대비 스터디방입니다. 일주일에 1개 이상의 면접 질문 공유하실 분만 들어와주세요~" />
               <LockImg src={LockIcon} alt="lock" />
             </Item>
             <Line />
@@ -96,14 +107,16 @@ const Ranking = () => {
               <ItemImage src={OpenStudyIcon} alt="open-study" />
               <div onClick={() => navigate("/study/:studyroomid")}>
                 싱글톤패턴 문제 완벽 대비
-              </div>
+              </div>{" "}
+              <Tooltip description="삼성CS 면접 대비 스터디방입니다. 일주일에 1개 이상의 면접 질문 공유하실 분만 들어와주세요~" />
             </Item>
             <Line />
             <Item>
               <ItemImage src={OpenStudyIcon} alt="open-study" />
               <div onClick={() => navigate("/study/:studyroomid")}>
                 싱글톤패턴 문제 완벽 대비
-              </div>
+              </div>{" "}
+              <Tooltip description="삼성CS 면접 대비 스터디방입니다. 일주일에 1개 이상의 면접 질문 공유하실 분만 들어와주세요~" />
             </Item>
           </ItemBody>
         </ItemWrapper>
