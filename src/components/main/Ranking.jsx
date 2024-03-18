@@ -8,11 +8,19 @@ import PrivateStudyIcon from "../../assets/private_study.png";
 import LockIcon from "../../assets/lock.png";
 import { useNavigate } from "react-router-dom";
 import useToolTip from "../../hooks/useTooltip";
+import useModal from "../../hooks/useModal";
 
 const Ranking = () => {
   const navigate = useNavigate();
 
   const Tooltip = useToolTip("");
+
+  const { openModal, Modal } = useModal();
+
+  // open modal
+  const handleModal = () => {
+    openModal();
+  };
 
   return (
     <Wrapper>
@@ -79,9 +87,7 @@ const Ranking = () => {
           <ItemBody>
             <Item>
               <ItemImage src={PrivateStudyIcon} alt="private-study" />
-              <div onClick={() => navigate("/study/:studyroomid")}>
-                싱글톤패턴 문제 완벽 대비
-              </div>{" "}
+              <div onClick={handleModal}>싱글톤패턴 문제 완벽 대비</div>{" "}
               <Tooltip description="삼성CS 면접 대비 스터디방입니다. 일주일에 1개 이상의 면접 질문 공유하실 분만 들어와주세요~" />
               <LockImg src={LockIcon} alt="lock" />
             </Item>
@@ -96,9 +102,7 @@ const Ranking = () => {
             <Line />
             <Item>
               <ItemImage src={PrivateStudyIcon} alt="private-study" />
-              <div onClick={() => navigate("/study/:studyroomid")}>
-                싱글톤패턴 문제 완벽 대비
-              </div>{" "}
+              <div onClick={handleModal}>싱글톤패턴 문제 완벽 대비</div>{" "}
               <Tooltip description="삼성CS 면접 대비 스터디방입니다. 일주일에 1개 이상의 면접 질문 공유하실 분만 들어와주세요~" />
               <LockImg src={LockIcon} alt="lock" />
             </Item>
@@ -121,6 +125,18 @@ const Ranking = () => {
           </ItemBody>
         </ItemWrapper>
       </ContentWrapper>
+
+      {/* 비공개 스터디방일 경우 modal */}
+      <Modal style={{ width: "400px", height: "220px" }}>
+        <ModalContent>
+          <div>
+            <ModalBody>
+              이 스터디방은 비공개입니다. 가입코드를 입력해주세요.
+            </ModalBody>
+            <CodeInput type="password" maxLength="4" placeholder="* * * *" />
+          </div>
+        </ModalContent>
+      </Modal>
     </Wrapper>
   );
 };
@@ -251,6 +267,42 @@ const LockImg = styled.img`
   flex-grow: 0;
   color: #fa9600;
   margin-left: 10px;
+`;
+
+const ModalContent = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-top: 60px;
+  font-size: 14px;
+  text-align: center;
+`;
+
+const ModalBody = styled.div`
+  margin-bottom: 20px;
+  color: #c7c7c7;
+  text-align: center;
+`;
+
+const CodeInput = styled.input`
+  border: none;
+  outline: none;
+  font-size: 18px;
+  width: 266px;
+  height: 37px;
+  padding: 4px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  background: linear-gradient(to bottom, #636363, #6363634d);
+
+  &::placeholder {
+    color: #acacac;
+    font-size: 18px;
+  }
 `;
 
 export default Ranking;
