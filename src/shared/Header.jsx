@@ -14,7 +14,7 @@ const Header = () => {
   return (
     <Wrapper>
       <Logo onClick={() => navigate("/")}>
-        <LogoImg src={LogoImage} alt="logo" />
+        <img src={LogoImage} alt="logo" />
       </Logo>
 
       <NavContainer>
@@ -72,22 +72,12 @@ const Wrapper = styled.header`
   }
 `;
 const Logo = styled.div`
-  font-family: "Unbounded";
-  color: #5263ff;
-  font-size: 35px;
-  white-space: nowrap;
-  position: absolute;
-  left: 9vw;
-  @media (max-width: 1765px) {
-    position: static;
-  }
-`;
-const LogoImg = styled.img`
   width: 176px;
   height: 84px;
   margin: 0 88px 31px 151px;
   object-fit: contain;
 `;
+
 const NavContainer = styled.nav`
   display: flex;
   max-width: 1090px;
