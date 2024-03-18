@@ -22,6 +22,7 @@ import {
   WorkMake,
 } from "../pages";
 import Header from "./Header";
+import Footer from "./Footer";
 
 const Router = () => {
   return (
@@ -58,6 +59,7 @@ const Router = () => {
         />
         <Route path="/studymake" element={<StudyMake />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 };
