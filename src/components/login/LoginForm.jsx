@@ -28,15 +28,22 @@ export default function LoginForm() {
           password: password,
         }
       );
-      console.log("Response:", response);
+
+      const userData = JSON.parse(response.config.data);
+      const user = userData.usermail.split("@")[0];
+      // console.log(userData.usermail.split("@")[0]);
 
       if (response.status === 200 && response.data.code === 200) {
         // 로그인 성공
+
+        sessionStorage.setItem("userEmail", user);
+        sessionStorage.setItem("isLoggedIn", true);
         navigate("/");
-      } else if (response.status === 400 && response.data.code === 400) {
+      } else if (response.status === 400) {
         // 로그인 실패
         setIsError(true);
       } else {
+        setIsError(true);
         console.error("unexpected reesponse: ", response);
       }
     } catch (error) {

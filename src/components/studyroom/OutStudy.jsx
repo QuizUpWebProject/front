@@ -1,6 +1,7 @@
 import useModal from "../../hooks/useModal";
 import styled from "styled-components";
 import OutIcon from "../../assets/Btn_out.png";
+import { useNavigate } from "react-router-dom";
 
 export default function OutStudy() {
   // useModal 사용해서 그룹방 탈퇴 모달 구현
@@ -11,7 +12,13 @@ export default function OutStudy() {
     openModal();
   };
 
-  // 탈퇴 시 탈퇴 완료 후, 나의 그룹 스터디방 목록에서 제거 기능 구현 필요
+  // 탈퇴하기 클릭 후 스터디방 메인으로 이동
+  const navigate = useNavigate();
+
+  const outStudyBtn = () => {
+    navigate("/study");
+    // 탈퇴 완료 후 스터디방 목록에서 제거하는 기능 구현 예쩡
+  };
 
   return (
     <>
@@ -23,7 +30,7 @@ export default function OutStudy() {
           <div>
             <ModalBody>해당 스터디방을 탈퇴하시겠습니까?</ModalBody>
           </div>
-          <Button>탈퇴하기</Button>
+          <Button onClick={outStudyBtn}>탈퇴하기</Button>
         </ModalContent>
       </Modal>
     </>

@@ -1,27 +1,59 @@
 import React from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
-import "../assets/fonts/font.css"
+import { NavLink, useNavigate } from "react-router-dom";
+import "../assets/fonts/font.css";
+import Alarm from "../components/alarm/Alarm";
+import LogoImage from "../assets/logo.png";
 
 const Header = () => {
+  const userEmail = sessionStorage.getItem("userEmail");
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
+
+  const navigate = useNavigate();
 
   return (
     <Wrapper>
-      <Logo>Quiz up</Logo> 
+      <Logo onClick={() => navigate("/")}>
+        <img src={LogoImage} alt="logo" />
+      </Logo>
 
       <NavContainer>
         <NavGroup>
-          <NavItem><NavLinkStyled to='/'>홈</NavLinkStyled></NavItem>
-          <NavItem><NavLinkStyled to='/front'>프론트엔드</NavLinkStyled></NavItem>
-          <NavItem><NavLinkStyled to='/back'>백엔드</NavLinkStyled></NavItem>
+          <NavItem>
+            <NavLinkStyled to="/">홈</NavLinkStyled>
+          </NavItem>
+          <NavItem>
+            <NavLinkStyled to="/front">프론트엔드</NavLinkStyled>
+          </NavItem>
+          <NavItem>
+            <NavLinkStyled to="/back">백엔드</NavLinkStyled>
+          </NavItem>
         </NavGroup>
         <NavGroup>
-          <NavItem><NavLinkStyled to='/study'>스터디방</NavLinkStyled></NavItem>
-          <NavItem isNotification><Button>알림</Button></NavItem>
-          <NavItem><NavLinkStyled to='MyPage'>마이페이지</NavLinkStyled></NavItem>
+          <NavItem>
+            <NavLinkStyled to="/study">스터디방</NavLinkStyled>
+          </NavItem>
+          {isLoggedIn ? (
+            <>
+              <NavItem isNotification>
+                <Alarm />
+              </NavItem>
+              <NavItem>
+                <NavLinkStyled to={`/${userEmail}`}>마이페이지</NavLinkStyled>
+              </NavItem>
+            </>
+          ) : (
+            <>
+              <NavItem>
+                <NavLinkStyled to="/login">로그인</NavLinkStyled>
+              </NavItem>
+              <NavItem>
+                <NavLinkStyled to="/joinagree">회원가입</NavLinkStyled>
+              </NavItem>
+            </>
+          )}
         </NavGroup>
       </NavContainer>
-
     </Wrapper>
   );
 };
@@ -40,16 +72,12 @@ const Wrapper = styled.header`
   }
 `;
 const Logo = styled.div`
-  font-family: "Unbounded";
-  color: #5263FF;
-  font-size: 35px;
-  white-space: nowrap;
-  position: absolute;
-  left: 9vw;
-  @media (max-width: 1765px) {
-    position: static;
-  }
+  width: 176px;
+  height: 84px;
+  margin: 0 88px 31px 151px;
+  object-fit: contain;
 `;
+
 const NavContainer = styled.nav`
   display: flex;
   max-width: 1090px;
@@ -72,8 +100,8 @@ const NavItem = styled.li`
 `;
 const NavLinkStyled = styled(NavLink)`
   text-decoration: none;
-  color: #A4A4A4;
-  position:relative;
+  color: #a4a4a4;
+  position: relative;
   white-space: nowrap;
 
   &:hover {
@@ -81,28 +109,20 @@ const NavLinkStyled = styled(NavLink)`
   }
 
   &.active::before {
-    content: '';
+    content: "";
     position: absolute;
     top: -10%;
     right: -10px;
     transform: translateY(-50%);
     width: 6px;
     height: 6px;
-    background-color: #5263FF;
+    background-color: #5263ff;
     border-radius: 50%;
   }
 
   &.active {
     color: white;
   }
-`;
-const Button = styled.button`
-  border: none;
-  background-color: transparent;
-  color: #A4A4A4;
-  cursor: pointer;
-  white-space: nowrap;
-  font-size: 16px;
 `;
 
 export default Header;
