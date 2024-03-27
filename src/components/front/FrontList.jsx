@@ -5,110 +5,115 @@ import SearchBar from "./SearchBar";
 import usePagination from "../../hooks/usePagination";
 import LeftIcon from "../../assets/left.png";
 import RightIcon from "../../assets/right.png";
+import axios from 'axios';
 
-function isEqual(arr1, arr2) {
-  if (arr1.length !== arr2.length) {
-    return false;
-  }
-
-  for (let i = 0; i < arr1.length; i++) {
-    if (arr1[i].id !== arr2[i].id) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-export default function FrontList() {
-  // 임시 프론트 문제집 data 
-  const frontData = [
-    {id: 1, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-15", user: "소밍밍", like: 10, cmt: 5},
-    {id: 2, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-14", user: "소밍밍", like: 2, cmt: 5},
-    {id: 3, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-13", user: "소밍밍", like: 0, cmt: 5},
-    {id: 4, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-12", user: "소밍밍", like: 1, cmt: 10},
-    {id: 5, title: "정보처리기사실기_2023정보처리기사실기_2023", date: "2023-10-11", user: "소밍밍", like: 15, cmt: 11},
-  ];
-  const [sortOption, setSortOption] = useState('latest'); // 초기 정렬 기준 : 최신순
-  const [data, setData] = useState(frontData); // 데이터 상태 정의
-
+export default function FrontList({ standardEnum, handleSort }) {
+  const [data, setData] = useState([]); // 데이터 상태 정의
+  const [searchResults, setSearchResults] = useState([]); // 검색 결과
+  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15; // 페이지 당 보여줄 아이템 수
   const {
-    currentPage,
     currentItems,
     totalPages,
     paginate,
     goToPrevPage,
     goToNextPage,
   } = usePagination(
-    data, // 데이터를 frontData로 변경
-    itemsPerPage
+    searchResults.length > 0 ? searchResults : data, // 데이터를 frontData로 변경
+    itemsPerPage, currentPage
   );
 
   useEffect(() => {
-    // 문제집 리스트 정렬
-    const sortData = (sortKey) => {
-      const sortedData = [...data]; // 원본 데이터를 변경하지 않기 위해 복사
+    // API 호출 함수 정의
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_BASE_URL}/problem/api/getlist`,
+          {
+            params: {
+              pageNumber: currentPage,
+              pageSize: itemsPerPage,
+              category: "front",
+              standardEnum: standardEnum
+            }
+          });
 
-      if (sortKey === 'latest') {
-        sortedData.sort((a, b) => new Date(b.date) - new Date(a.date)); // 최신순
-      } else if (sortKey === 'oldest') {
-        sortedData.sort((a, b) => new Date(a.date) - new Date(b.date)); // 등록순
-      } else if (sortKey === 'highestRated') {
-        sortedData.sort((a, b) => b.like - a.like);                     // 평점 높은순
-      } else if (sortKey === 'mostCommented') {
-        sortedData.sort((a, b) => b.cmt - a.cmt);                       // 댓글순
+        if (response.status === 200 && response.data.code === 200) {
+          const responseData = response.data.result;
+          if (responseData && responseData !== null) {
+            setData(responseData);
+          } else {
+            setData([]); // 결과가 없으면 빈 배열로 초기화
+          }
+        } else {
+          console.error("frontlist error: ", response.data.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };  
+
+    fetchData();
+  }, [currentPage, itemsPerPage, standardEnum]);
+
+  const handleSearch = async (word, searchType) => {
+    try {
+      let url = '';
+      if (searchType === '제목') {
+        url = `${process.env.REACT_APP_API_BASE_URL}/problem/api/searchproblemlisttitle`;
+      } else if (searchType === '닉네임') {
+        url = `${process.env.REACT_APP_API_BASE_URL}/problem/api/searchproblemlistuserid`;
       }
 
-      return sortedData;
-    };
-    const sortedData = sortData(sortOption);
-    // 정렬된 데이터와 현재 데이터가 다를 경우에만 업데이트
-    if (!isEqual(sortedData, data)) {
-      setData(sortedData);
+      const response = await axios.get(url, {
+        params: {
+          pageNumber: 1,
+          pageSize: itemsPerPage,
+          word: word,
+          problemListStandardEnum: standardEnum,
+        }
+      });
+      setSearchResults(response.data.result || []);
+      setCurrentPage(1); // 검색 결과를 받으면 페이지를 첫 페이지로 초기화
+    } catch (error) {
+      console.error('Error:', error);
     }
-  }, [sortOption, data]);
+  };
 
   return(
     <div>
       <Container>
         <SortOptions>
-          <SortButton
-            onClick={() => setSortOption('latest')}
-            active={sortOption === 'latest'}
-          >
+          <SortButton isSelected={standardEnum === 'LATEST'} onClick={() => handleSort('LATEST')}>
             최신순
           </SortButton>
-          <SortButton
-            onClick={() => setSortOption('oldest')}
-            active={sortOption === 'oldest'}
-          >
+          <SortButton isSelected={standardEnum === 'OLDEST'} onClick={() => handleSort('OLDEST')}>
             등록순
           </SortButton>
-          <SortButton
-            onClick={() => setSortOption('highestRated')}
-            active={sortOption === 'highestRated'}
-          >
+          <SortButton isSelected={standardEnum === 'RECOMMEND'} onClick={() => handleSort('RECOMMEND')}>
             추천순
           </SortButton>
-          <SortButton
-            onClick={() => setSortOption('mostCommented')}
-            active={sortOption === 'mostCommented'}
-          >
+          <SortButton isSelected={standardEnum === 'VIEW'} onClick={() => handleSort('VIEW')}>
             댓글순
           </SortButton>
         </SortOptions>
 
-        <SearchBar />
+        <SearchBar onSearch={handleSearch} />
       </Container>
 
       {/* 필터링된 프론트 문제집 리스트 표시 */}
       <table>
         <tbody>
           {/* 현재 페이지의 아이템 렌더링 */}
-          {currentItems.map((front, index) => (
-            <FrontItem key={front.id} item={front} index={index}/>
-          ))}
+          {currentItems.length > 0 ? (
+            currentItems.map((front, index) => (
+              <FrontItem key={front.id} item={front} index={index} />
+            ))
+          ) : (
+            <tr>
+              <td colSpan="3">검색 결과가 없습니다.</td>
+            </tr>
+          )}
         </tbody>
 
         {/* 페이지네이션 컴포넌트 렌더링 */}
@@ -149,7 +154,7 @@ const SortOptions = styled.div`
 const SortButton = styled.button`
   margin-right: 15spx;
   background-color: transparent;
-  color: ${(props) => (props.active ? '#FFFFFF' : '#838383')};
+  color: ${(props) => (props.isSelected ? '#FFFFFF' : '#838383')};
   font-size: 16px;
   border: none;
   cursor: pointer;

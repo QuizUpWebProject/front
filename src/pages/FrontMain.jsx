@@ -1,8 +1,15 @@
 import styled from "styled-components";
 import Tooltip from "../components/front/Tooltip";
 import FrontList from "../components/front/FrontList";
+import React, { useState } from "react";
 
 const FrontMain = () => {
+  const [standardEnum, setStandardEnum] = useState('LATEST'); // standardEnum 추가
+
+  const handleSort = (enumValue) => {
+    setStandardEnum(enumValue);
+  };
+
   return (
     <Wrapper>
       <TitleContent>
@@ -11,7 +18,7 @@ const FrontMain = () => {
       </TitleContent>
 
       <div>
-        <FrontList  />
+        <FrontList standardEnum={standardEnum} handleSort={handleSort} />
       </div>
     </Wrapper>
   );
