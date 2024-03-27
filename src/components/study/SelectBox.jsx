@@ -1,14 +1,15 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import DropDownIcon from "../../assets/dropdown.png";
 
-const SelectBox = () => {
+const SelectBox = ({ onSelectChange }) => {
   const [isShowOption, setShowOptions] = useState(false);
   const [currentValue, setCurrentValue] = useState("제목");
 
   const handleSelectValue = (e) => {
     const { innerText } = e.target;
     setCurrentValue(innerText);
+    onSelectChange(innerText);
   };
 
   return (

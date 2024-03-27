@@ -10,17 +10,17 @@ import axios from 'axios';
 export default function FrontList({ standardEnum, handleSort }) {
   const [data, setData] = useState([]); // 데이터 상태 정의
   const [searchResults, setSearchResults] = useState([]); // 검색 결과
+  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15; // 페이지 당 보여줄 아이템 수
   const {
-    currentPage,
     currentItems,
     totalPages,
     paginate,
     goToPrevPage,
     goToNextPage,
   } = usePagination(
-    data, // 데이터를 frontData로 변경
-    itemsPerPage
+    searchResults.length > 0 ? searchResults : data, // 데이터를 frontData로 변경
+    itemsPerPage, currentPage
   );
 
   useEffect(() => {
@@ -39,7 +39,12 @@ export default function FrontList({ standardEnum, handleSort }) {
           });
 
         if (response.status === 200 && response.data.code === 200) {
-          setData(response.data.result);
+          const responseData = response.data.result;
+          if (responseData && responseData !== null) {
+            setData(responseData);
+          } else {
+            setData([]); // 결과가 없으면 빈 배열로 초기화
+          }
         } else {
           console.error("frontlist error: ", response.data.message);
         }
@@ -51,8 +56,28 @@ export default function FrontList({ standardEnum, handleSort }) {
     fetchData();
   }, [currentPage, itemsPerPage, standardEnum]);
 
-  const handleSearch = (results) => {
-    setSearchResults(results);
+  const handleSearch = async (word, searchType) => {
+    try {
+      let url = '';
+      if (searchType === '제목') {
+        url = `${process.env.REACT_APP_API_BASE_URL}/problem/api/searchproblemlisttitle`;
+      } else if (searchType === '닉네임') {
+        url = `${process.env.REACT_APP_API_BASE_URL}/problem/api/searchproblemlistuserid`;
+      }
+
+      const response = await axios.get(url, {
+        params: {
+          pageNumber: 1,
+          pageSize: itemsPerPage,
+          word: word,
+          problemListStandardEnum: standardEnum,
+        }
+      });
+      setSearchResults(response.data.result || []);
+      setCurrentPage(1); // 검색 결과를 받으면 페이지를 첫 페이지로 초기화
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return(
@@ -80,9 +105,15 @@ export default function FrontList({ standardEnum, handleSort }) {
       <table>
         <tbody>
           {/* 현재 페이지의 아이템 렌더링 */}
-          {currentItems.map((front, index) => (
-           <FrontItem key={front.id} item={front} index={index}/>
-          ))}
+          {currentItems.length > 0 ? (
+            currentItems.map((front, index) => (
+              <FrontItem key={front.id} item={front} index={index} />
+            ))
+          ) : (
+            <tr>
+              <td colSpan="3">검색 결과가 없습니다.</td>
+            </tr>
+          )}
         </tbody>
 
         {/* 페이지네이션 컴포넌트 렌더링 */}

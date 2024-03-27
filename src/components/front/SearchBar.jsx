@@ -1,14 +1,36 @@
 import styled from "styled-components";
 import SearchIcon from "../../assets/search.png";
 import SelectBox from "../study/SelectBox";
+import React, { useState } from 'react';
 
-export default function SearchBar() {
+export default function SearchBar({ onSearch }) {
+  const [searchWord, setSearchWord] = useState('');
+  const [searchType, setSearchType] = useState('제목');
+
+  const handleSearch = async () => {
+    onSearch(searchWord, searchType);
+  };
+
+  const handleChange = (e) => {
+    setSearchWord(e.target.value);
+  };
+
+  const handleSelectChange = (value) => {
+    setSearchType(value);
+  };
+
   return (
     <SearchSection>
-      <SelectBox />
+      <SelectBox onSelectChange={handleSelectChange} />
       <SearchInputWrapper>
-        <SearchInput placeholder="검색어를 입력하세요." name="search" />
-        <SearchImg src={SearchIcon} alt="검색아이콘" />
+        <SearchInput 
+          placeholder="검색어를 입력하세요." 
+          name="search" 
+          type="text"
+          value={searchWord}
+          onChange={handleChange}
+        />
+        <SearchImg src={SearchIcon} alt="검색아이콘" onClick={handleSearch} />
       </SearchInputWrapper>
     </SearchSection>
   );
@@ -22,7 +44,7 @@ const SearchSection = styled.div`
   z-index: 1;
 `;
 
-const SearchInputWrapper = styled.div`
+const SearchInputWrapper = styled.form`
   display: flex;
   align-items: center;
   background-color: #3f424e;
@@ -47,4 +69,5 @@ const SearchInput = styled.input`
 const SearchImg = styled.img`
   width: 20px;
   margin-right: 5px;
+  cursor: pointer;
 `;
